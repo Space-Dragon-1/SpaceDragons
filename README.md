@@ -5,9 +5,9 @@
 
 <h2>Integrantes del equipo:</h2>
 <ul>
-    <li>Emerson.</li>
-    <li>Javier.</li>
-    <li>Daniel.</li>
-    <li>Jeisson.</li>
-    <li>Juan</li>
+    <li>Emerson - .</li>
+    <li>Javier - .</li>
+    <li>Daniel - .</li>
+    <li>Jeisson - Desarrollador.</li>
+    <li>Juan - .</li>
 </ul>
