@@ -7,7 +7,7 @@
 <ul>
     <li>Emerson - owner .</li>
     <li>Javier - .</li>
-    <li>Daniel - .</li>
+    <li>Daniel - Administrador de DB.</li>
     <li>Jeisson - Desarrollador.</li>
     <li>Juan - .</li>
 </ul>
