@@ -5,7 +5,7 @@
 
 <h2>Integrantes del equipo:</h2>
 <ul>
-    <li>Emerson - .</li>
+    <li>Emerson - owner .</li>
     <li>Javier - .</li>
     <li>Daniel - .</li>
     <li>Jeisson - Desarrollador.</li>
