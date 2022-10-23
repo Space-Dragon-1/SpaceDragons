@@ -9,7 +9,7 @@ function App() {
       <main>
         <h1>Productos destacados</h1>
         {data.products.map((product) => (
-          <div>
+          <div key={product.slug}>
             <img src={product.image} alt={product.name} />
             <p>{product.name}</p>
             <p>{product.price}</p>
