@@ -3,7 +3,10 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
-import 'css/bootstrap.min.css';
+import './index.css';
+import './css/bootstrap.min.css';
+import './css/custom.css';
+import './css/style.css';
 
 function App() {
   return (
