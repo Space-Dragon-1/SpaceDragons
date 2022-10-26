@@ -1,6 +1,7 @@
 [
   {
     "name": "AirPods",
+    "slug": "air-pods",
     "price": 985000,
     "image": "images/product-1.jpg",
     "stock": 10,
@@ -8,6 +9,7 @@
   },
   {
     "name": "Air Jordan 12 gym red",
+    "slug": "air-jordan-12-gym-red",
     "price": 1139320,
     "image": "images/product-2.jpg",
     "stock": 15,
@@ -15,6 +17,7 @@
   },
   {
     "name": "Camiseta de algodón Cyan",
+    "slug": "camiseta-de-algodon-cyan",
     "price": 25000,
     "image": "images/product-3.jpg",
     "stock": 64,
@@ -22,54 +25,63 @@
   },
   {
     "name": "Timex Unisex Originals",
+    "slug": "timex-unisex-originals",
     "price": 351500,
     "image": "images/product-4.jpg",
     "stock": 9
   },
   {
     "name": "Red digital smartwatch",
+    "slug": "red-digital-smartwatch",
     "price": 250800,
     "image": "images/product-5.jpg",
     "stock": 12
   },
   {
     "name": "Nike air max 95",
+    "slug": "nike-air-max-95",
     "price": 370450,
     "image": "images/product-6.jpg",
     "stock": 42
   },
   {
     "name": "Joemalone Women prefume",
+    "slug": "joemalone-women-prefume",
     "price": 25900,
     "image": "images/product-7.jpg",
     "stock": 36
   },
   {
     "name": "Apple Watch",
+    "slug": "apple-watch",
     "price": 1350000,
     "image": "images/product-8.jpg",
     "stock": 4
   },
   {
     "name": "Men silver Byron Watch",
+    "slug": "men-silver-byron-watch",
     "price": 420000,
     "image": "images/product-9.jpg",
     "stock": 11
   },
   {
     "name": "Polaroid one step camera",
+    "slug": "polaroid-one-step-camera",
     "price": 670000,
     "image": "images/product-10.jpg",
     "stock": 2
   },
   {
     "name": "Gray Nike running shoes",
+    "slug": "gray-nike-running-shoes",
     "price": 312000,
     "image": "images/product-11.jpg",
     "stock": 21
   },
   {
     "name": "Black DSLR lense",
+    "slug": "black-dslr-lense",
     "price": 460500,
     "image": "images/product-12.jpg",
     "stock": 3

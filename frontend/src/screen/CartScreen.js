@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import productJson from '../../data/products.json';
+import productJson from '../data/products.json';
 function CartScreen() {
   return (
     <div className="container">
