@@ -6,7 +6,7 @@ function ProductCustomer() {
     <>
       {productJson.map((product) => {
         return (
-          <div className="col-lg-3 col-sm-6 " >
+          <div className="col-lg-3 col-sm-6 ">
             <div className="product text-center">
               <div className="mb-3 position-relative">
                 <a className="d-block" href="detail.html">
@@ -19,9 +19,9 @@ function ProductCustomer() {
                 <div className="product-overlay">
                   <ul className="mb-0 list-inline">
                     <li className="list-inline-item m-0 p-0">
-                    <a class="btn btn-sm btn-dark" href="cart.html">
+                      <a class="btn btn-sm btn-dark" href="cart.html">
                         Añadir al Carrito
-                        </a>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -35,7 +35,11 @@ function ProductCustomer() {
               <p className="text-muted">
                 ${product.price.toLocaleString("co")}
               </p>
-              <p className="reset-anchor"> Descripcion: {product.description}</p>
+              <p className="text-muted">Stock: {product.stock}</p>
+              <p className="reset-anchor text-muted">
+                {" "}
+                <strong>Descripción:</strong> {product.description}
+              </p>
             </div>
           </div>
         );
