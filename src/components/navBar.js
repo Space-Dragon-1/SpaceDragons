@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -7,11 +8,11 @@ function Navbar() {
       <header className="header bg-white">
         <div className="container px-lg-3">
           <nav className="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
-            <a className="navbar-brand" href="index.html">
+            <NavLink className="navbar-brand" to="/">
               <span className="fw-bold text-uppercase text-dark">
                 SPACE SHOP
               </span>
-            </a>
+            </NavLink>
             <button
               className="navbar-toggler navbar-toggler-end"
               type="button"
@@ -29,16 +30,17 @@ function Navbar() {
             >
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  <a className="nav-link active" href="index.html">
+                  {/* TODO: link está activo? */}
+                  <NavLink className="nav-link" to="/">
                     Home
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="shop.html">
+                  <NavLink className="nav-link" to="/tienda">
                     Tienda
-                  </a>
+                  </NavLink>
                 </li>
-                
+
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -89,20 +91,20 @@ function Navbar() {
               </ul>
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <a className="nav-link" href="cart.html">
+                  <NavLink className="nav-link" to="/carrito">
                     {" "}
                     <i className="fas fa-dolly-flatbed me-1 text-gray"></i>
                     Carrito
                     {/* <small className="text-gray fw-normal">(2)</small> */}
-                  </a>
+                  </NavLink>
                 </li>
-                
+
                 <li className="nav-item">
-                  <a className="nav-link" href="#!">
+                  <NavLink className="nav-link" to="/#">
                     {" "}
                     <i className="fas fa-user me-1 text-gray fw-normal"></i>
                     Iniciar Sesión
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </div>

@@ -1,33 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import productJson from "../data/products.json";
 
-function Product() {
+function ProductCustomer() {
   return (
     <>
       {productJson.map((product) => {
         return (
-          <div className="col-lg-3 col-sm-6">
+          <div className="col-lg-3 col-sm-6 " >
             <div className="product text-center">
               <div className="mb-3 position-relative">
-                <Link className="d-block" href="/">
+                <a className="d-block" href="detail.html">
                   <img
                     className="img-fluid w-100"
                     src={product.image}
                     alt="..."
                   />
-                </Link>
+                </a>
                 <div className="product-overlay">
                   <ul className="mb-0 list-inline">
                     <li className="list-inline-item m-0 p-0">
-                      <a className="btn btn-sm btn-outline-primary" href="cart.html">
-                        <i className="far fa-edit"></i> Modificar
-                      </a>
-                    </li>
-                    <li className="list-inline-item m-0 p-0">
-                      <a className="btn btn-sm btn-outline-danger" href="#!">
-                        <i className="far fa-trash-alt"></i> Eliminar
-                      </a>
+                    <a class="btn btn-sm btn-dark" href="cart.html">
+                        Añadir al Carrito
+                        </a>
                     </li>
                   </ul>
                 </div>
@@ -41,7 +35,7 @@ function Product() {
               <p className="text-muted">
                 ${product.price.toLocaleString("co")}
               </p>
-              <p className="text-muted">Stock: {product.stock}</p>
+              <p className="reset-anchor"> Descripcion: {product.description}</p>
             </div>
           </div>
         );
@@ -50,5 +44,5 @@ function Product() {
   );
 }
 
-export { Product };
+export { ProductCustomer };
 

@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { Product } from "./product";
+import React from "react";
+import { Heading } from "../components/Heading";
+import { Product } from "../components/Product";
 
-class ProductListAdmin extends Component {
-  render() {
-    return (
+function ProductListAdminPage() {
+  return (
+    <div className="container">
+      <Heading />
       <section className="py-5">
         <div className="col-lg-12 order-1 order-lg-2 mb-5 mb-lg-0">
           <div className="row mb-3 align-items-center">
@@ -75,9 +77,8 @@ class ProductListAdmin extends Component {
           </div>
         </div>
       </section>
-    );
-  }
+    </div>
+  );
 }
-
-export { ProductListAdmin };
+export { ProductListAdminPage };
 
