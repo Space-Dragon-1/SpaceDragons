@@ -1,6 +1,6 @@
-import React from "react";
-import { Heading } from "../components/Heading";
-import { Product } from "../components/Product";
+import React from 'react';
+import { Heading } from '../components/Heading';
+import { Product } from '../components/product';
 
 function ProductListAdminPage() {
   return (
@@ -81,4 +81,3 @@ function ProductListAdminPage() {
   );
 }
 export { ProductListAdminPage };
-

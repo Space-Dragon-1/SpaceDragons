@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
   return (
@@ -50,49 +50,37 @@ function Navbar() {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Pages
+                    Admin
                   </a>
                   <div
                     className="dropdown-menu mt-3 shadow-sm"
                     aria-labelledby="pagesDropdown"
                   >
-                    <a
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="index.html"
+                      to="/lista-productos-admin"
                     >
-                      Homepage
-                    </a>
-                    <a
+                      Todos los productos
+                    </NavLink>
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="shop.html"
+                      to="/nuevo-producto"
                     >
-                      Category
-                    </a>
-                    <a
+                      Agregar nuevo producto
+                    </NavLink>
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="detail.html"
+                      to="/ventas-realizadas"
                     >
-                      Product detail
-                    </a>
-                    <a
-                      className="dropdown-item border-0 transition-link"
-                      href="cart.html"
-                    >
-                      Shopping cart
-                    </a>
-                    <a
-                      className="dropdown-item border-0 transition-link"
-                      href="checkout.html"
-                    >
-                      Checkout
-                    </a>
+                      Ventas
+                    </NavLink>
                   </div>
                 </li>
               </ul>
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/carrito">
-                    {" "}
+                    {' '}
                     <i className="fas fa-dolly-flatbed me-1 text-gray"></i>
                     Carrito
                     {/* <small className="text-gray fw-normal">(2)</small> */}
@@ -101,7 +89,7 @@ function Navbar() {
 
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/#">
-                    {" "}
+                    {' '}
                     <i className="fas fa-user me-1 text-gray fw-normal"></i>
                     Iniciar Sesión
                   </NavLink>
@@ -116,4 +104,3 @@ function Navbar() {
 }
 
 export { Navbar };
-
