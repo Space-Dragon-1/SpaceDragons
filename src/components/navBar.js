@@ -8,11 +8,11 @@ function Navbar() {
       <header className="header bg-white">
         <div className="container px-lg-3">
           <nav className="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
-            <NavLink className="navbar-brand" to="/">
+            <a className="navbar-brand" href="/#">
               <span className="fw-bold text-uppercase text-dark">
                 SPACE SHOP
               </span>
-            </NavLink>
+            </a>
             <button
               className="navbar-toggler navbar-toggler-end"
               type="button"
@@ -30,7 +30,6 @@ function Navbar() {
             >
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  {/* TODO: link está activo? */}
                   <NavLink className="nav-link" to="/">
                     Home
                   </NavLink>
@@ -42,50 +41,44 @@ function Navbar() {
                 </li>
 
                 <li className="nav-item dropdown">
-                  <a
+                  <NavLink
                     className="nav-link dropdown-toggle"
                     id="pagesDropdown"
-                    href="/#"
+                    to="/null"
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     Pages
-                  </a>
+                  </NavLink>
                   <div
                     className="dropdown-menu mt-3 shadow-sm"
                     aria-labelledby="pagesDropdown"
                   >
-                    <a
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="index.html"
+                      to="/"
                     >
-                      Homepage
-                    </a>
-                    <a
+                      Home
+                    </NavLink>
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="shop.html"
+                      to="nuevo-producto"
                     >
-                      Category
-                    </a>
-                    <a
+                      Nuevo Producto
+                    </NavLink>
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="detail.html"
+                      to="/lista-productos-admin"
                     >
-                      Product detail
-                    </a>
-                    <a
+                      Lista Productos Admin
+                    </NavLink>
+                    <NavLink
                       className="dropdown-item border-0 transition-link"
-                      href="cart.html"
+                      to="ventas-realizadas"
                     >
-                      Shopping cart
-                    </a>
-                    <a
-                      className="dropdown-item border-0 transition-link"
-                      href="checkout.html"
-                    >
-                      Checkout
-                    </a>
+                      Ventas Realizadas
+                    </NavLink>
                   </div>
                 </li>
               </ul>
@@ -100,7 +93,7 @@ function Navbar() {
                 </li>
 
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/#">
+                  <NavLink className="nav-link" to="/login">
                     {" "}
                     <i className="fas fa-user me-1 text-gray fw-normal"></i>
                     Iniciar Sesión
