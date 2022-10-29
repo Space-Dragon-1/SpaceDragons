@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -42,16 +42,16 @@ function Navbar() {
                 </li>
 
                 <li className="nav-item dropdown">
-                  <a
+                  <NavLink
                     className="nav-link dropdown-toggle"
                     id="pagesDropdown"
-                    href="/#"
+                    to="/null"
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     Admin
-                  </a>
+                  </NavLink>
                   <div
                     className="dropdown-menu mt-3 shadow-sm"
                     aria-labelledby="pagesDropdown"
@@ -80,7 +80,7 @@ function Navbar() {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/carrito">
-                    {' '}
+                    {" "}
                     <i className="fas fa-dolly-flatbed me-1 text-gray"></i>
                     Carrito
                     {/* <small className="text-gray fw-normal">(2)</small> */}
@@ -88,8 +88,8 @@ function Navbar() {
                 </li>
 
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/#">
-                    {' '}
+                  <NavLink className="nav-link" to="/login">
+                    {" "}
                     <i className="fas fa-user me-1 text-gray fw-normal"></i>
                     Iniciar Sesión
                   </NavLink>
@@ -104,3 +104,4 @@ function Navbar() {
 }
 
 export { Navbar };
+
