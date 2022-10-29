@@ -4,36 +4,46 @@ function Footer() {
       <div className="container py-4">
         <div className="row py-5">
           <div className="col-md-4 mb-3 mb-md-0">
-            <h6 className="text-uppercase mb-3">Servicio al Cliente</h6>
+            <h6 className="text-uppercase mb-3">Customer services</h6>
             <ul className="list-unstyled mb-0">
               <li>
                 <a className="footer-link" href="/#">
-                  Ayuda &amp; Contáctanos
+                  Help &amp; Contact Us
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="/#">
-                  Devoluciones &amp; Reembolsos
+                  Returns &amp; Refunds
+                </a>
+              </li>
+              <li>
+                <a className="footer-link" href="/#">
+                  Online Stores
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="#!">
-                  Términos &amp; Condiciones
+                  Terms &amp; Conditions
                 </a>
               </li>
             </ul>
           </div>
           <div className="col-md-4 mb-3 mb-md-0">
-            <h6 className="text-uppercase mb-3">Compañia</h6>
+            <h6 className="text-uppercase mb-3">Company</h6>
             <ul className="list-unstyled mb-0">
               <li>
                 <a className="footer-link" href="#!">
-                  Qué Hacemos
+                  What We Do
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="#!">
-                  Servicios Disponibles
+                  Available Services
+                </a>
+              </li>
+              <li>
+                <a className="footer-link" href="#!">
+                  Latest Posts
                 </a>
               </li>
               <li>
@@ -63,7 +73,7 @@ function Footer() {
               </li>
               <li>
                 <a className="footer-link" href="#!">
-                  Facebook
+                  Pinterest
                 </a>
               </li>
             </ul>
