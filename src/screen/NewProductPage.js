@@ -30,14 +30,14 @@ function NewProductPage() {
           </div>
         </div>
       </section>
-      <div className="Contenedores bg-light col-lg container">
-        <div className="row">
+      <div className="py-5">
+        <div className="row pb-5">
           <div className="col-lg-6 col-sm-6">
             <form>
               <div className="mb-3">
                 <label className="form-label">Código del producto</label>
                 <input
-                  className="Id form-control"
+                  className="form-control"
                   placeholder="Código del producto"
                   type="Number"
                   id="Id"
@@ -46,25 +46,17 @@ function NewProductPage() {
               <div className="mb-3">
                 <label className="form-label">Nombre del producto</label>
                 <input
-                  className="Name form-control"
+                  className="form-control"
                   placeholder="Nombre del producto"
                   type="text"
                   id="Name"
                 ></input>
               </div>
-              <div className="mb-3">
-                <label className="form-label">Descripción del producto</label>
+              <label className="form-label">Precio del producto</label>
+              <div className="input-group mb-3">
+                <span className="input-group-text">$</span>
                 <input
-                  className="Description form-control"
-                  placeholder="Descripción del producto"
-                  type="text"
-                  id="Description"
-                ></input>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Precio del producto</label>
-                <input
-                  className="Precio form-control"
+                  className="form-control"
                   placeholder="Precio del producto"
                   type="Number"
                   id="Precio"
@@ -73,35 +65,47 @@ function NewProductPage() {
               <div className="mb-3">
                 <label className="form-label">Cantidad del producto</label>
                 <input
-                  className="Stock form-control"
+                  className="form-control"
                   placeholder="Cantidad del producto"
                   type="Number"
                   id="Stock"
                 ></input>
               </div>
               <div className="mb-3">
-                <label className="form-label">Subir imagen del producto</label>
-                <input className="form-control" type="file" accept="image/png, image/jpeg"></input>
+                <label className="form-label">Descripción del producto</label>
+                <textarea
+                  className="form-control"
+                  placeholder="Descripción del producto"
+                  id="Description"
+                ></textarea>
               </div>
               <div className="mb-3">
-              <button className="btn btn-primary" onClick={BtnRegistrar} type="submit" id="BtnSave">
-            Ingresar
-          </button>
+                <label className="form-label">Subir imagen del producto</label>
+                <input
+                  className="form-control"
+                  type="file"
+                  accept="image/png, image/jpeg"
+                ></input>
+              </div>
+              <div className="mb-3">
+                <button
+                  className="btn btn-primary"
+                  onClick={BtnRegistrar}
+                  type="submit"
+                  id="BtnSave"
+                >
+                  Ingresar
+                </button>
               </div>
             </form>
           </div>
           <div className="col-lg-6 col-sm-6">
-            <div className="Image">
-              <img
-                className="rounded mx-auto d-block"
-                alt="Imagen"
-                src="https://play-lh.googleusercontent.com/pFP0zVCWof079KaI91C9-Kdxijg0K0YlTqov7aVb5aQztDKZPHjDamxSNsR5BC_z23Y"
-              ></img>
-            </div>
+            <img
+              className="rounded mx-auto d-block img-fluid"
+              alt="Imagen"
+              src="https://play-lh.googleusercontent.com/pFP0zVCWof079KaI91C9-Kdxijg0K0YlTqov7aVb5aQztDKZPHjDamxSNsR5BC_z23Y"
+            ></img>
           </div>
-        </div>
-        <div className="BtnIngresar">
-          
         </div>
       </div>
     </div>
