@@ -41,7 +41,7 @@ function Product() {
               <p className="text-muted">
                 ${product.price.toLocaleString("co")}
               </p>
-              <p className="text-muted">Stock: {product.stock}</p>
+              <p className="text-muted">Disponible: {product.stock}</p>
             </div>
           </div>
         );

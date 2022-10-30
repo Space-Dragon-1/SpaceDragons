@@ -24,13 +24,13 @@
     "slug": "camiseta-algodon-cyan"
   },
   {
-    "name": "Timex Unisex Originals",
+    "name": "Reloj Timex Unisex",
     "price": 351500,
     "image": "images/product-4.jpg",
     "stock": 9
   },
   {
-    "name": "Red digital smartwatch",
+    "name": "Smartwatch rojo ",
     "price": 250800,
     "image": "images/product-5.jpg",
     "stock": 12
@@ -42,7 +42,7 @@
     "stock": 42
   },
   {
-    "name": "Joemalone Women prefume",
+    "name": "Perfume Joemalone mujer",
     "price": 25900,
     "image": "images/product-7.jpg",
     "stock": 36
@@ -54,25 +54,25 @@
     "stock": 4
   },
   {
-    "name": "Men silver Byron Watch",
+    "name": "Reloj Byron plateado hombre",
     "price": 420000,
     "image": "images/product-9.jpg",
     "stock": 11
   },
   {
-    "name": "Polaroid one step camera",
+    "name": "Cámara Polaroid One Step 2",
     "price": 670000,
     "image": "images/product-10.jpg",
     "stock": 2
   },
   {
-    "name": "Gray Nike running shoes",
+    "name": " Tenis Gray Nike Running",
     "price": 312000,
     "image": "images/product-11.jpg",
     "stock": 21
   },
   {
-    "name": "Black DSLR lense",
+    "name": "Lente Black DSLR",
     "price": 460500,
     "image": "images/product-12.jpg",
     "stock": 3

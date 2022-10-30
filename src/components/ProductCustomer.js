@@ -35,11 +35,11 @@ function ProductCustomer() {
               <p className="text-muted">
                 ${product.price.toLocaleString("co")}
               </p>
-              <p className="text-muted">Stock: {product.stock}</p>
-              <p className="reset-anchor text-muted">
+              <p className="text-muted">Disponible: {product.stock}</p>
+              {/* <p className="reset-anchor text-muted">
                 {" "}
                 <strong>Descripción:</strong> {product.description}
-              </p>
+              </p> */}
             </div>
           </div>
         );

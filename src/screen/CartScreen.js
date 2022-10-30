@@ -8,20 +8,8 @@ function CartScreen() {
       <section className="py-5 bg-light">
         <div className="container">
           <div className="row px-4 px-lg-5 py-lg-4 align-items-center">
-            <div className="col-lg-6">
+            <div className="col-lg-12">
               <h1 className="h2 text-uppercase mb-0">Carrito</h1>
-            </div>
-            <div className="col-lg-6 text-lg-end">
-              <nav aria-label="breadcrumb">
-                <ol className="breadcrumb justify-content-lg-end mb-0 px-0 bg-light">
-                  <li className="breadcrumb-item">
-                    <Link to="/">Inicio</Link>
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page">
-                    Cart
-                  </li>
-                </ol>
-              </nav>
             </div>
           </div>
         </div>
@@ -37,17 +25,17 @@ function CartScreen() {
                     <th className="border-0 p-3" scope="col">
                       {" "}
                       <strong className="text-sm text-uppercase">
-                        Product
+                        Producto
                       </strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
                       {" "}
-                      <strong className="text-sm text-uppercase">Price</strong>
+                      <strong className="text-sm text-uppercase">Precio</strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
                       {" "}
                       <strong className="text-sm text-uppercase">
-                        Quantity
+                        Cantidad
                       </strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
@@ -88,7 +76,7 @@ function CartScreen() {
                         </div>
                       </th>
                       <td className="p-3 align-middle border-light">
-                        <p className="mb-0 small">${product.price}</p>
+                        <p className="mb-0 small">${product.price.toLocaleString("co")}</p>
                       </td>
                       <td className="p-3 align-middle border-light">
                         <div className="border d-flex align-items-center justify-content-between px-3">
@@ -111,7 +99,7 @@ function CartScreen() {
                         </div>
                       </td>
                       <td className="p-3 align-middle border-light">
-                        <p className="mb-0 small">$250</p>
+                        <p className="mb-0 small">${product.price.toLocaleString("co")}</p>
                       </td>
                       <td className="p-3 align-middle border-light">
                         <a className="reset-anchor" href="#!">
@@ -120,7 +108,6 @@ function CartScreen() {
                       </td>
                     </tr>
                   ))}
-                  ;
                 </tbody>
               </table>
             </div>
@@ -156,14 +143,14 @@ function CartScreen() {
                     <strong className="text-uppercase small font-weight-bold">
                       Subtotal
                     </strong>
-                    <span className="text-muted small">$250</span>
+                    <span className="text-muted small">$6.360.470</span>
                   </li>
                   <li className="border-bottom my-2"></li>
                   <li className="d-flex align-items-center justify-content-between mb-4">
                     <strong className="text-uppercase small font-weight-bold">
                       Total
                     </strong>
-                    <span>$250</span>
+                    <span>$6.360.470</span>
                   </li>
                 </ul>
               </div>

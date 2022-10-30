@@ -97,16 +97,6 @@ function SalesHistoryPage() {
               </div>
             </div>
           </div>
-          <div className="bg-light px-4 py-3">
-            <div className="row align-items-center text-center">
-              <div className="col-md-6 text-md-end">
-                <a className="btn btn-outline-dark btn-sm" href="checkout.html">
-                  Calcular total
-                  <i className="fas fa-long-arrow-alt-right ms-2"></i>
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </div>
