@@ -1,19 +1,23 @@
 import cors from "cors";
 import express from "express";
+import { DBconnection } from "./db.js";
+import productRoutes from "./routes/products.routes.js";
 
 const app = express();
-let products = [
+DBconnection();
+/*let products = [
   {
     id: 1,
     name: "laptop",
     price: 3000,
   },
 ];
-
+*/
+app.use(productRoutes);
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
   res.send("Home page");
 });
 
@@ -80,7 +84,8 @@ app.delete("/products/:id", (req, res) => {
     message: "product deleted",
   });
 });
+*/
 
 app.listen("5000", () => {
-  console.log("servidor iniciado");
+  console.log("servidor iniciado en puerto", 5000);
 });
