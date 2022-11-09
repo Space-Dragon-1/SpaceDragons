@@ -41,19 +41,19 @@ function App() {
                       Home
                     </a>
                   </li>
-                  <li classNameName="nav-item">
-                    <a classNameName="nav-link" href="shop.html">
+                  <li className="nav-item">
+                    <a className="nav-link" href="shop.html">
                       Shop
                     </a>
                   </li>
-                  <li classNameName="nav-item">
-                    <a classNameName="nav-link" href="detail.html">
+                  <li className="nav-item">
+                    <a className="nav-link" href="detail.html">
                       Product detail
                     </a>
                   </li>
-                  <li classNameName="nav-item dropdown">
+                  <li className="nav-item dropdown">
                     <a
-                      classNameName="nav-link dropdown-toggle"
+                      className="nav-link dropdown-toggle"
                       id="pagesDropdown"
                       href="#"
                       data-bs-toggle="dropdown"
@@ -112,7 +112,7 @@ function App() {
                   <li className="nav-item">
                     <a className="nav-link" href="#!">
                       {' '}
-                      <i clasName="fas fa-user me-1 text-gray fw-normal"></i>
+                      <i className="fas fa-user me-1 text-gray fw-normal"></i>
                       Login
                     </a>
                   </li>
