@@ -1,10 +1,13 @@
-import cors from "cors";
-import express from "express";
+import app from "./app.js";
+import { PORT } from "./config.js";
 import { DBconnection } from "./db.js";
-import productRoutes from "./routes/products.routes.js";
 
-const app = express();
 DBconnection();
+
+app.listen(PORT, () => {
+  console.log("servidor iniciado en puerto", PORT);
+});
+
 /*let products = [
   {
     id: 1,
@@ -13,9 +16,9 @@ DBconnection();
   },
 ];
 */
-app.use(productRoutes);
-app.use(cors());
-app.use(express.json());
+
+//app.use(cors());
+//app.use(express.json());
 
 /*app.get("/", (req, res) => {
   res.send("Home page");
@@ -85,7 +88,3 @@ app.delete("/products/:id", (req, res) => {
   });
 });
 */
-
-app.listen("5000", () => {
-  console.log("servidor iniciado en puerto", 5000);
-});
