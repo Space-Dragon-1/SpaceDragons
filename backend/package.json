@@ -5,6 +5,7 @@
   "main": "./server/index.js",
   "type": "module",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Space Dragons",
@@ -16,6 +17,7 @@
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
     "fs-extra": "^10.1.0",
-    "mongoose": "^6.7.1"
+    "mongoose": "^6.7.1",
+    "nodemon": "^2.0.20"
   }
 }

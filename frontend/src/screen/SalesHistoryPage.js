@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import dataJson from "../data/sales.json";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import dataJson from '../data/sales.json';
 
 function SalesHistoryPage() {
   function add(dataJson) {
@@ -74,7 +74,7 @@ function SalesHistoryPage() {
                       </td>
                       <td className="p-3 align-middle border-light">
                         <p className="mb-0 small">
-                          ${ventas.valor.toLocaleString("co")}
+                          ${ventas.valor.toLocaleString('co')}
                         </p>
                       </td>
                     </tr>
@@ -90,7 +90,7 @@ function SalesHistoryPage() {
                 <ul className="list-unstyled mb-0">
                   <li className="d-flex align-items-center justify-content-between mb-4">
                     <span className="lead">
-                      ${add(dataJson).toLocaleString("co")}
+                      ${add(dataJson).toLocaleString('co')}
                     </span>
                   </li>
                 </ul>

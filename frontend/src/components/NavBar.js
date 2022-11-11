@@ -1,7 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Store } from '../Store';
 
 function Navbar() {
+  const { state } = useContext(Store);
+  const { cart } = state;
   return (
     <React.Fragment>
       {/* <!--Navbar--> */}
@@ -80,16 +83,19 @@ function Navbar() {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/carrito">
-                    {" "}
                     <i className="fas fa-dolly-flatbed me-1 text-gray"></i>
                     Carrito
-                    {/* <small className="text-gray fw-normal">(2)</small> */}
+                    {cart.cartItems.length > 0 && (
+                      <small className="ms-1 text-danger fw-normal">
+                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      </small>
+                    )}
                   </NavLink>
                 </li>
 
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/login">
-                    {" "}
+                    {' '}
                     <i className="fas fa-user me-1 text-gray fw-normal"></i>
                     Iniciar Sesión
                   </NavLink>
@@ -104,4 +110,3 @@ function Navbar() {
 }
 
 export { Navbar };
-

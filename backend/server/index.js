@@ -1,11 +1,35 @@
-import app from "./app.js";
-import { PORT } from "./config.js";
-import { DBconnection } from "./db.js";
+import app from './app.js';
+import data from './data/products.js';
+import { PORT } from './config.js';
+import { DBconnection } from './db.js';
 
-DBconnection();
+//DBconnection();
 
-app.listen(PORT, () => {
-  console.log("servidor iniciado en puerto", PORT);
+app.get('/api/tienda', (req, res) => {
+  res.send(data.products);
+});
+
+app.get('/api/tienda/slug/:slug', (req, res) => {
+  const product = data.products.find((x) => x.slug === req.params.slug);
+  if (product) {
+    res.status(200).send(product);
+  } else {
+    res.status(404).send({ message: 'Producto no encontrado' });
+  }
+});
+
+app.get('/api/products/:id', (req, res) => {
+  const product = data.products.find((x) => x._id === req.params.id);
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: 'Producto no encontrado' });
+  }
+});
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Servidor iniciado en puerto http://localhost:${port}`);
 });
 
 /*let products = [
