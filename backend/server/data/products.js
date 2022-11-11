@@ -1,7 +1,23 @@
+import bcrypt from 'bcryptjs';
+
 const data = {
+  users: [
+    {
+      name: 'Javier',
+      email: 'admin@ejemplo.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+    {
+      name: 'Juan',
+      email: 'user@ejemplo.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
-      _id: '1',
+      //_id: '1',
       name: 'AirPods',
       price: 985000,
       image: 'images/product-1.jpg',
@@ -11,7 +27,7 @@ const data = {
       slug: 'airpods',
     },
     {
-      _id: '2',
+      //_id: '2',
       name: 'Air Jordan 12 gym red',
       price: 1139320,
       image: 'images/product-2.jpg',
@@ -21,7 +37,7 @@ const data = {
       slug: 'air-jordan-12-gym-red',
     },
     {
-      _id: '3',
+      //_id: '3',
       name: 'Camiseta de algodón Cyan',
       price: 25000,
       image: 'images/product-3.jpg',
@@ -30,7 +46,7 @@ const data = {
       slug: 'camiseta-algodon-cyan',
     },
     {
-      _id: '4',
+      //_id: '4',
       name: 'Reloj Timex Unisex',
       price: 351500,
       image: 'images/product-4.jpg',
@@ -39,7 +55,7 @@ const data = {
       slug: 'reloj-timex-unisex',
     },
     {
-      _id: '5',
+      //_id: '5',
       name: 'Smartwatch rojo ',
       price: 250800,
       image: 'images/product-5.jpg',
@@ -48,7 +64,7 @@ const data = {
       slug: 'smartwatch-rojo',
     },
     {
-      _id: '6',
+      //_id: '6',
       name: 'Nike air max 95',
       price: 370450,
       image: 'images/product-6.jpg',
@@ -57,7 +73,7 @@ const data = {
       slug: 'nike-air-max-95',
     },
     {
-      _id: '7',
+      //_id: '7',
       name: 'Perfume Joemalone mujer',
       price: 25900,
       image: 'images/product-7.jpg',
@@ -66,7 +82,7 @@ const data = {
       slug: 'perfume-joemalome-mujer',
     },
     {
-      _id: '8',
+      //_id: '8',
       name: 'Apple Watch',
       price: 1350000,
       image: 'images/product-8.jpg',
@@ -75,7 +91,7 @@ const data = {
       slug: 'apple-watch',
     },
     {
-      _id: '9',
+      //_id: '9',
       name: 'Reloj Byron plateado hombre',
       price: 420000,
       image: 'images/product-9.jpg',
@@ -84,7 +100,7 @@ const data = {
       slug: 'reloj-byron-plateado-hombre',
     },
     {
-      _id: '10',
+      //_id: '10',
       name: 'Cámara Polaroid One Step 2',
       price: 670000,
       image: 'images/product-10.jpg',
@@ -93,7 +109,7 @@ const data = {
       slug: 'camara-polaroid-one-step-2',
     },
     {
-      _id: '11',
+      //_id: '11',
       name: ' Tenis Gray Nike Running',
       price: 312000,
       image: 'images/product-11.jpg',
@@ -102,7 +118,7 @@ const data = {
       slug: 'tenis-gray-nile-running',
     },
     {
-      _id: '12',
+      //_id: '12',
       name: 'Lente Black DSLR',
       price: 460500,
       image: 'images/product-12.jpg',

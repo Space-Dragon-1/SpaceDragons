@@ -35,7 +35,7 @@ function Navbar() {
                 <li className="nav-item">
                   {/* TODO: link está activo? */}
                   <NavLink className="nav-link" to="/">
-                    Home
+                    Inicio
                   </NavLink>
                 </li>
                 <li className="nav-item">

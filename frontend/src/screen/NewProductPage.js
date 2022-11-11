@@ -1,20 +1,20 @@
 function NewProductPage() {
   function BtnRegistrar() {
-    let Id = document.getElementById("Id").value;
-    let Name = document.getElementById("Name").value;
-    let Description = document.getElementById("Description").value;
-    let Precio = document.getElementById("Precio").value;
-    let Stock = document.getElementById("Stock").value;
+    let Id = document.getElementById('Id').value;
+    let Name = document.getElementById('Name').value;
+    let Description = document.getElementById('Description').value;
+    let Precio = document.getElementById('Precio').value;
+    let Stock = document.getElementById('Stock').value;
     if (
-      Id === "" ||
-      Name === "" ||
-      Description === "" ||
-      Stock === "" ||
-      Precio === ""
+      Id === '' ||
+      Name === '' ||
+      Description === '' ||
+      Stock === '' ||
+      Precio === ''
     ) {
-      alert("Complete los campos, por favor");
+      alert('Complete los campos, por favor');
     } else {
-      alert("Registro exitoso");
+      alert('Registro exitoso');
     }
   }
   return (
@@ -113,4 +113,3 @@ function NewProductPage() {
 }
 
 export { NewProductPage };
-

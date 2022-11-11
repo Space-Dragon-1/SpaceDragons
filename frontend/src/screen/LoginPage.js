@@ -5,7 +5,7 @@ export default function LoginPage() {
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
   return (
-    <div className="small-container">
+    <div className="small-container w-100 m-auto pt-5 pb-5">
       <h1 className="my-3">Iniciar Session</h1>
       <form>
         <div className="form-group">
@@ -15,21 +15,25 @@ export default function LoginPage() {
             id="email"
             name="email"
             type="email"
+            placeholder="hola@tucorreo.com"
             required
           ></input>
         </div>
-        <div className="form-group">
+        <div className="form-group mt-2">
           <label for="password">Contraseña</label>
           <input
             className="form-control"
             id="password"
             name="password"
             type="password"
+            placeholder="Contraseña"
             required
           ></input>
         </div>
         <div className="mb-3">
-          <button type="submit">Iniciar Sesión</button>
+          <button className="w-100 btn btn-lg btn-primary mt-3" type="submit">
+            Iniciar Sesión
+          </button>
         </div>
         <div className="mb-3">
           No tienes una cuenta?{' '}

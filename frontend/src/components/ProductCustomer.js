@@ -56,9 +56,9 @@ function ProductCustomer(props) {
       </div>
       <h6>
         {' '}
-        <a className="reset-anchor" href="detail.html">
+        <Link className="d-block text-dark" to={`/products/${product.slug}`}>
           {product.name}
-        </a>
+        </Link>
       </h6>
       <p className="text-muted">${product.price.toLocaleString('co')}</p>
       <p className="text-muted">En Stock: {product.stock}</p>
