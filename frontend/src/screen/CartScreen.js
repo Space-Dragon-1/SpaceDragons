@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import productJson from "../data/products.json";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function CartScreen() {
+function CartScreen(props) {
+  const { product } = props;
   return (
     <div className="container">
       <section className="py-5 bg-light">
@@ -23,91 +23,93 @@ function CartScreen() {
                 <thead className="bg-light">
                   <tr>
                     <th className="border-0 p-3" scope="col">
-                      {" "}
+                      {' '}
                       <strong className="text-sm text-uppercase">
                         Producto
                       </strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
-                      {" "}
+                      {' '}
                       <strong className="text-sm text-uppercase">Precio</strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
-                      {" "}
+                      {' '}
                       <strong className="text-sm text-uppercase">
                         Cantidad
                       </strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
-                      {" "}
+                      {' '}
                       <strong className="text-sm text-uppercase">Total</strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
-                      {" "}
+                      {' '}
                       <strong className="text-sm text-uppercase"></strong>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="border-0">
-                  {productJson.map((product) => (
-                    <tr>
-                      <th className="ps-0 py-3 border-light" scope="row">
-                        <div className="d-flex align-items-center">
-                          <Link
-                            className="reset-anchor d-block animsition-link"
-                            to={`/product/${product.slug}`}
-                          >
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              width="70"
-                            />
-                          </Link>
-                          <div className="ms-3">
-                            <strong className="h6">
-                              <Link
-                                className="reset-anchor animsition-link"
-                                to={`/product/${product.slug}`}
-                              >
-                                <p>{product.name}</p>
-                              </Link>
-                            </strong>
-                          </div>
+                  <tr>
+                    <th className="ps-0 py-3 border-light" scope="row">
+                      <div className="d-flex align-items-center">
+                        <Link
+                          className="reset-anchor d-block animsition-link"
+                          to={`/product/${product.slug}`}
+                        >
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            width="70"
+                          />
+                        </Link>
+                        <div className="ms-3">
+                          <strong className="h6">
+                            <Link
+                              className="reset-anchor animsition-link"
+                              to={`/product/${product.slug}`}
+                            >
+                              <p>{product.name}</p>
+                            </Link>
+                          </strong>
                         </div>
-                      </th>
-                      <td className="p-3 align-middle border-light">
-                        <p className="mb-0 small">${product.price.toLocaleString("co")}</p>
-                      </td>
-                      <td className="p-3 align-middle border-light">
-                        <div className="border d-flex align-items-center justify-content-between px-3">
-                          <span className="small text-uppercase text-gray headings-font-family">
-                            Cantidad
-                          </span>
-                          <div className="quantity">
-                            <button className="dec-btn p-0">
-                              <i className="fas fa-caret-left"></i>
-                            </button>
-                            <input
-                              className="form-control form-control-sm border-0 shadow-0 p-0"
-                              type="text"
-                              value="1"
-                            />
-                            <button className="inc-btn p-0">
-                              <i className="fas fa-caret-right"></i>
-                            </button>
-                          </div>
+                      </div>
+                    </th>
+                    <td className="p-3 align-middle border-light">
+                      <p className="mb-0 small">
+                        ${product.price.toLocaleString('co')}
+                      </p>
+                    </td>
+                    <td className="p-3 align-middle border-light">
+                      <div className="border d-flex align-items-center justify-content-between px-3">
+                        <span className="small text-uppercase text-gray headings-font-family">
+                          Cantidad
+                        </span>
+                        <div className="quantity">
+                          <button className="dec-btn p-0">
+                            <i className="fas fa-caret-left"></i>
+                          </button>
+                          <input
+                            className="form-control form-control-sm border-0 shadow-0 p-0"
+                            type="text"
+                            value="1"
+                          />
+                          <button className="inc-btn p-0">
+                            <i className="fas fa-caret-right"></i>
+                          </button>
                         </div>
-                      </td>
-                      <td className="p-3 align-middle border-light">
-                        <p className="mb-0 small">${product.price.toLocaleString("co")}</p>
-                      </td>
-                      <td className="p-3 align-middle border-light">
-                        <a className="reset-anchor" href="#!">
-                          <i className="fas fa-trash-alt small text-muted"></i>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+                      </div>
+                    </td>
+                    <td className="p-3 align-middle border-light">
+                      <p className="mb-0 small">
+                        ${product.price.toLocaleString('co')}
+                      </p>
+                    </td>
+                    <td className="p-3 align-middle border-light">
+                      <a className="reset-anchor" href="#!">
+                        <i className="fas fa-trash-alt small text-muted"></i>
+                      </a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

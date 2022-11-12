@@ -1,11 +1,22 @@
-import app from "./app.js";
-import { PORT } from "./config.js";
-import { DBconnection } from "./db.js";
+import app from './app.js';
+import data from './data/products.js';
+import { PORT } from './config.js';
+import { DBconnection } from './db.js';
+import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRoutes.js';
 
 DBconnection();
 
-app.listen(PORT, () => {
-  console.log("servidor iniciado en puerto", PORT);
+app.use('/api/seed', seedRouter);
+app.use('/api/products', productRouter);
+
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
+});
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Servidor iniciado en puerto http://localhost:${port}`);
 });
 
 /*let products = [

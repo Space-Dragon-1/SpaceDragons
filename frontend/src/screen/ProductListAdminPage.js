@@ -1,9 +1,47 @@
-import React from "react";
-import { Heading } from "../components/Heading";
-import { Product } from "../components/Product";
+import axios from 'axios';
+import { useEffect, useReducer } from 'react';
+import { Heading } from '../components/Heading';
+import { Product } from '../components/Product';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, products: action.payload, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 function ProductListAdminPage() {
-  return (
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
+    products: [],
+    loading: true,
+    error: '',
+  });
+  //const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get('/api/products');
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+      }
+
+      //setProducts(result.data);
+    };
+    fetchData();
+  }, []);
+  return loading ? (
+    <div>Loading...</div>
+  ) : error ? (
+    <div>{error}</div>
+  ) : (
     <div className="container">
       <Heading />
       <section className="py-5">
@@ -43,7 +81,9 @@ function ProductListAdminPage() {
           </div>
           <div className="row">
             {/* <!-- PRODUCT--> */}
-            <Product />
+            {products.map((product) => (
+              <Product product={product}> </Product>
+            ))}
             {/* <!-- PAGINATION--> */}
             <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center justify-content-lg-end">
@@ -81,4 +121,3 @@ function ProductListAdminPage() {
   );
 }
 export { ProductListAdminPage };
-

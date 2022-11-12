@@ -1,2 +1,7 @@
 @import url(https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap);
 @import url(https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap);
+
+
+.small-container {
+    max-width: 600px;
+}
