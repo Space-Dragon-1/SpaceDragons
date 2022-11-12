@@ -1,15 +1,16 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Footer } from './components/Footer';
-import { Navbar } from './components/NavBar';
-import { HomePage } from './screen/HomePage';
-import CartPage from './screen/CartPage';
-import { ProductListCustomerPage } from './screen/ProductListCustomerPage';
-import ProductPage from './screen/ProductPage';
-import { NewProductPage } from './screen/NewProductPage';
-import { NotFoundPage } from './screen/NotFoundPage';
-import { ProductListAdminPage } from './screen/ProductListAdminPage';
-import SalesHistoryPage from './screen/SalesHistoryPage';
-import './styles/app.css';
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Footer } from "./components/Footer";
+import { Navbar } from "./components/NavBar";
+import CartScreen from "./screen/CartScreen";
+import { EditProductPage } from "./screen/EditProductPage";
+import { HomePage } from "./screen/HomePage";
+import { NewProductPage } from "./screen/NewProductPage";
+import { NotFoundPage } from "./screen/NotFoundPage";
+import { ProductListAdminPage } from "./screen/ProductListAdminPage";
+import { ProductListCustomerPage } from "./screen/ProductListCustomerPage";
+import SalesHistoryPage from "./screen/SalesHistoryPage";
+import "./styles/app.css";
 import LoginPage from './screen/LoginPage';
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
           <Route
             path="/lista-productos-admin"
             element={<ProductListAdminPage />}
+          />
+          <Route
+            path="/lista-productos-admin/:slug"
+            element={<EditProductPage />}
           />
           <Route path="/ventas-realizadas" element={<SalesHistoryPage />} />
           <Route path="/tienda" element={<ProductListCustomerPage />} />
