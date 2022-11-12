@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Navbar } from "./components/NavBar";
 import CartScreen from "./screen/CartScreen";
+import { EditProductPage } from "./screen/EditProductPage";
 import { HomePage } from "./screen/HomePage";
 import { NewProductPage } from "./screen/NewProductPage";
 import { NotFoundPage } from "./screen/NotFoundPage";
@@ -21,6 +22,10 @@ function App() {
           <Route
             path="/lista-productos-admin"
             element={<ProductListAdminPage />}
+          />
+          <Route
+            path="/lista-productos-admin/:slug"
+            element={<EditProductPage />}
           />
           <Route path="/ventas-realizadas" element={<SalesHistoryPage />} />
           <Route path="/tienda" element={<ProductListCustomerPage />} />

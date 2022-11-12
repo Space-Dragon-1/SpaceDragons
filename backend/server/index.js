@@ -5,7 +5,7 @@ import { DBconnection } from "./db.js";
 DBconnection();
 
 app.listen(PORT, () => {
-  console.log("servidor iniciado en puerto", PORT);
+  console.log(`servidor iniciado en http://localhost:${PORT}`);
 });
 
 /*let products = [

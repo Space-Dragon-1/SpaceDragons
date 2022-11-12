@@ -1,54 +1,49 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import productJson from "../data/products.json";
 
-function Product() {
+export function Product(props) {
+  const { product } = props;
   return (
-    <>
-      {productJson.map((product) => {
-        return (
-          <div className="col-lg-3 col-sm-6">
-            <div className="product text-center">
-              <div className="mb-3 position-relative">
-                <Link className="d-block" href="/">
-                  <img
-                    className="img-fluid w-100"
-                    src={product.image}
-                    alt="..."
-                  />
+    <div className="col-lg-3 col-sm-6">
+      <div className="product text-center">
+        <div className="mb-3 position-relative w-100">
+          <Link className="d-block" to={`/lista-productos-admin/${product.slug}`}>
+            <img
+              className="img-fluid img-wrapper mx-auto"
+              src={product.image}
+              alt={product.name}
+            />
+          </Link>
+          <div className="product-overlay">
+            <ul className="mb-0 list-inline">
+              <li className="list-inline-item m-0 p-0">
+                <Link
+                  className="btn btn-sm btn-outline-primary"
+                  to={`/lista-productos-admin/${product.slug}`}
+                >
+                  <i className="far fa-edit"></i> Modificar
                 </Link>
-                <div className="product-overlay">
-                  <ul className="mb-0 list-inline">
-                    <li className="list-inline-item m-0 p-0">
-                      <a className="btn btn-sm btn-outline-primary" href="cart.html">
-                        <i className="far fa-edit"></i> Modificar
-                      </a>
-                    </li>
-                    <li className="list-inline-item m-0 p-0">
-                      <a className="btn btn-sm btn-outline-danger" href="#!">
-                        <i className="far fa-trash-alt"></i> Eliminar
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <h6>
-                {" "}
-                <a className="reset-anchor" href="detail.html">
-                  {product.name}
-                </a>
-              </h6>
-              <p className="text-muted">
-                ${product.price.toLocaleString("co")}
-              </p>
-              <p className="text-muted">Disponible: {product.stock}</p>
-            </div>
+              </li>
+              <li className="list-inline-item m-0 p-0">
+                <Link className="btn btn-sm btn-outline-danger" to="#!">
+                  <i className="far fa-trash-alt"></i> Eliminar
+                </Link>
+              </li>
+            </ul>
           </div>
-        );
-      })}
-    </>
+        </div>
+        <h6>
+          {" "}
+          <Link
+            className="reset-anchor"
+            to={`/lista-productos-admin/${product.slug}`}
+          >
+            {product.name}
+          </Link>
+        </h6>
+        <p className="text-muted">${product.price.toLocaleString("co")}</p>
+        <p className="text-muted">Disponible: {product.stock}</p>
+      </div>
+    </div>
   );
 }
-
-export { Product };
-

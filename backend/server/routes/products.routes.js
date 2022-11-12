@@ -3,17 +3,19 @@ import {
   createProduct,
   deleteProduct,
   getProduct,
+  getProductBySlug,
   getProducts,
   updateProduct
 } from "../controllers/products.controllers.js";
 
 const router = Router();
 
-router.get("/products", getProducts);
-router.post("/products", createProduct);
-router.put("/products/:id", updateProduct);
-router.delete("/products/:id", deleteProduct);
+router.get("/admin/products", getProducts);
+router.get("/admin/products/slug/:slug",getProductBySlug);
+router.post("/admin/products", createProduct);
+router.put("/admin/products/:id", updateProduct);
+router.delete("/admin/products/:id", deleteProduct);
 
-router.get("/products/:id", getProduct);
+router.get("/admin/products/:id", getProduct);
 
 export default router;
