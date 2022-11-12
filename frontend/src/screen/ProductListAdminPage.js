@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import React, { useEffect, useReducer } from "react";
 import logger from "use-reducer-logger";
@@ -14,6 +15,7 @@ const reducer = (state, action) => {
     case "FETCH_SUCCESS":
       return { ...state, products: action.payload, loading: false };
     case "FETCH_FAIL":
+
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -41,6 +43,7 @@ export function ProductListAdminPage() {
   }, []);
 
   return (
+
     <div className="container">
       <Heading />
       <section className="py-5">
@@ -91,6 +94,7 @@ export function ProductListAdminPage() {
             )}
 
             {/* <Product /> */}
+
             {/* <!-- PAGINATION--> */}
             {/* <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center justify-content-lg-end">

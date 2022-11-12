@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
@@ -6,11 +6,12 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     slug: {
       type: String,
       required: true,
-      trim: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -37,4 +38,5 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("products", productSchema);
+const Product = mongoose.model('Product', productSchema);
+export default Product;

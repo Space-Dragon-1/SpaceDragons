@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Navbar } from "./components/NavBar";
@@ -10,6 +11,7 @@ import { ProductListAdminPage } from "./screen/ProductListAdminPage";
 import { ProductListCustomerPage } from "./screen/ProductListCustomerPage";
 import SalesHistoryPage from "./screen/SalesHistoryPage";
 import "./styles/app.css";
+import LoginPage from './screen/LoginPage';
 
 function App() {
   return (
@@ -29,7 +31,9 @@ function App() {
           />
           <Route path="/ventas-realizadas" element={<SalesHistoryPage />} />
           <Route path="/tienda" element={<ProductListCustomerPage />} />
-          <Route path="/carrito" element={<CartScreen />} />
+          <Route path="/tienda/:slug" element={<ProductPage />} />
+          <Route path="/carrito" element={<CartPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

@@ -1,7 +1,9 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 
 export function Product(props) {
+
   const { product } = props;
   return (
     <div className="col-lg-3 col-sm-6">
@@ -42,8 +44,10 @@ export function Product(props) {
           </Link>
         </h6>
         <p className="text-muted">${product.price.toLocaleString("co")}</p>
+
         <p className="text-muted">Disponible: {product.stock}</p>
       </div>
     </div>
   );
 }
+
