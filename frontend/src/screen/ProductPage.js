@@ -1,25 +1,25 @@
-import axios from 'axios';
-import { useContext, useEffect, useReducer } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { Store } from '../Store';
-import { getError } from '../utils';
+import axios from "axios";
+import { useContext, useEffect, useReducer } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { LoadingBox } from "../components/LoadingBox";
+import { MessageBox } from "../components/MessageBox";
+import { Store } from "../Store";
+import { getError } from "../utils";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_REQUEST':
+    case "FETCH_REQUEST":
       return { ...state, loading: true };
-    case 'FETCH_SUCCESS':
+    case "FETCH_SUCCESS":
       return { ...state, product: action.payload, loading: false };
-    case 'FETCH_FAIL':
+    case "FETCH_FAIL":
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-function ProductPage() {
+export function ProductPage() {
   const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
@@ -27,17 +27,17 @@ function ProductPage() {
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
     product: [],
     loading: true,
-    error: '',
+    error: "",
   });
   //const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
+      dispatch({ type: "FETCH_REQUEST" });
       try {
         const result = await axios.get(`/api/products/slug/${slug}`);
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
     fetchData();
@@ -50,15 +50,15 @@ function ProductPage() {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.stock < quantity) {
-      window.alert('Lo sentimos. No hay tantas unidades disponibles.');
+      window.alert("Lo sentimos. No hay tantas unidades disponibles.");
       return;
     }
 
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...product, quantity },
     });
-    navigate('/carrito');
+    navigate("/carrito");
   };
 
   return loading ? (
@@ -86,7 +86,7 @@ function ProductPage() {
               <div className="col-lg-6">
                 <h1>{product.name}</h1>
                 <p className="text-muted lead">
-                  ${product.price.toLocaleString('co')}
+                  ${product.price.toLocaleString("co")}
                 </p>
                 <h4>Descripción del Producto</h4>
                 <p className="text-sm mb-4">{product.description}</p>
@@ -119,5 +119,3 @@ function ProductPage() {
     </div>
   );
 }
-
-export default ProductPage;
