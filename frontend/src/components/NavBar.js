@@ -3,8 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { Store } from '../Store';
 
 function Navbar() {
-  const { state } = useContext(Store);
-  const { cart } = state;
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart, userInfo } = state;
+
+  const logoutHandler = () => {
+    ctxDispatch({ type: 'USER_LOGOUT' });
+    localStorage.removeItem('userInfo');
+  };
   return (
     <React.Fragment>
       {/* <!--Navbar--> */}
@@ -92,14 +97,41 @@ function Navbar() {
                     )}
                   </NavLink>
                 </li>
-
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/login">
-                    {' '}
-                    <i className="fas fa-user me-1 text-gray fw-normal"></i>
-                    Iniciar Sesión
-                  </NavLink>
-                </li>
+                {userInfo ? (
+                  <li className="nav-item dropdown">
+                    <NavLink
+                      className="nav-link dropdown-toggle"
+                      id="pagesDropdown"
+                      to="/null"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {userInfo.name}
+                    </NavLink>
+                    <div
+                      className="dropdown-menu mt-3 shadow-sm"
+                      aria-labelledby="pagesDropdown"
+                    >
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="#logout"
+                        onClick={logoutHandler}
+                      >
+                        Cerrar sesion
+                      </NavLink>
+                    </div>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to={'/login'}>
+                      {' '}
+                      <i className="fas fa-user me-1 text-gray fw-normal"></i>
+                      Iniciar Sesión
+                    </NavLink>
+                  </li>
+                )}
+                <li></li>
               </ul>
             </div>
           </nav>
