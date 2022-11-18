@@ -11,6 +11,9 @@ import { ProductListAdminPage } from './screen/ProductListAdminPage';
 import SalesHistoryPage from './screen/SalesHistoryPage';
 import './styles/app.css';
 import LoginPage from './screen/LoginPage';
+import RegisterPage from './screen/RegisterPage';
+import CheckoutPage from './screen/CheckoutPage';
+import PaymentPage from './screen/PaymentPage';
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
           <Route path="/tienda/:slug" element={<ProductPage />} />
           <Route path="/carrito" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

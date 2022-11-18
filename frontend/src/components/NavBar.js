@@ -9,6 +9,7 @@ function Navbar() {
   const logoutHandler = () => {
     ctxDispatch({ type: 'USER_LOGOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
   };
   return (
     <React.Fragment>
@@ -101,26 +102,27 @@ function Navbar() {
                   <li className="nav-item dropdown">
                     <NavLink
                       className="nav-link dropdown-toggle"
-                      id="pagesDropdown"
-                      to="/null"
+                      href="#"
+                      role="button"
                       data-bs-toggle="dropdown"
-                      aria-haspopup="true"
                       aria-expanded="false"
+                      to="/null"
                     >
+                      <i className="fas fa-user me-1 text-gray fw-normal"></i>
                       {userInfo.name}
                     </NavLink>
-                    <div
-                      className="dropdown-menu mt-3 shadow-sm"
-                      aria-labelledby="pagesDropdown"
-                    >
-                      <NavLink
-                        className="dropdown-item border-0 transition-link"
-                        to="#logout"
-                        onClick={logoutHandler}
-                      >
-                        Cerrar sesion
-                      </NavLink>
-                    </div>
+                    <ul className="dropdown-menu mt-3 shadow-sm">
+                      <li>
+                        <NavLink
+                          className="dropdown-item"
+                          to="#logout"
+                          onClick={logoutHandler}
+                        >
+                          <i className="fas fa-close me-1 text-gray fw-normal"></i>
+                          Cerrar sesion
+                        </NavLink>
+                      </li>
+                    </ul>
                   </li>
                 ) : (
                   <li className="nav-item">
