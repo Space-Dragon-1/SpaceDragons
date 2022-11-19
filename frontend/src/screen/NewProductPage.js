@@ -1,29 +1,23 @@
 import axios from "axios";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
+import * as Yup from "yup";
+import { LoadingBox } from "../components/LoadingBox";
 
-function NewProductPage() {
+export function NewProductPage() {
+  //const navigate = useNavigate();
 
-  /* function BtnRegistrar() {
-    let Id = document.getElementById("Id").value;
-    let Name = document.getElementById("Name").value;
-    let Description = document.getElementById("Description").value;
-    let Precio = document.getElementById("Precio").value;
-    let Stock = document.getElementById("Stock").value;
+  const [product, setProduct] = useState({
+    slug: "",
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    image: null,
+  });
 
-    if (
-      Id === '' ||
-      Name === '' ||
-      Description === '' ||
-      Stock === '' ||
-      Precio === ''
-    ) {
-      alert('Complete los campos, por favor');
-    } else {
-      alert('Registro exitoso');
-    }
-  } */
-
-  let [name, setName] = useState("");
+  /* let [name, setName] = useState("");
   let [slug, setSlug] = useState("");
   let [description, setDescription] = useState("");
   let [price, setPrice] = useState("");
@@ -31,31 +25,31 @@ function NewProductPage() {
   let [image, setImage] = useState(null);
 
   let onChangeName = (e) => {
-    setName((name = e.target.value));
+    setName(e.target.value);
   };
 
   let onChangeSlug = (e) => {
-    setSlug((slug = e.target.value));
+    setSlug(e.target.value);
   };
 
   let onChangeDescription = (e) => {
-    setDescription((description = e.target.value));
+    setDescription(e.target.value);
   };
 
   let onChangePrice = (e) => {
-    setPrice((price = e.target.value));
+    setPrice(e.target.value);
   };
 
   let onChangeStock = (e) => {
-    setStock((stock = e.target.value));
+    setStock(e.target.value);
   };
 
   let onChangeImage = (e) => {
-    setImage(image = e.target.files[0])
+    setImage(e.target.files[0]);
     /* if (e.target.files && e.target.files[0]) {
       setImage(URL.createObjectURL(e.target.files[0]));
     }
-     */
+     */ /*
     console.log(image);
     //setImage((image = e.target.value));
   };
@@ -63,38 +57,89 @@ function NewProductPage() {
   let onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const form = new FormData()
-      form.append("name", name)
-      form.append("slug", slug)
-      form.append("description", description)
-      form.append("price", price)
-      form.append("stock", stock)
-      form.append("image",image)
+      const form = new FormData();
+      form.append("name", name);
+      form.append("slug", slug);
+      form.append("description", description);
+      form.append("price", price);
+      form.append("stock", stock);
+      form.append("image", image);
 
-    
-      let result = await axios
-      .post("/admin/products", form,{
-        headers:{
-          "Content-Type": "multipart/form-data"
+      let result = await axios.post("/admin/products", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (result.status === 200) {
+        console.log(result);
+        const toastTrigger = document.getElementById("liveToastBtn");
+        const toastLiveExample = document.getElementById("liveToast");
+        if (toastTrigger) {
+          toastTrigger.addEventListener("click", () => {
+            const toast = new bootstrap.Toast(toastLiveExample);
+            toast.show();
+          });
         }
-      })
-      console.log(result.response);
-      /* if(result){
-        alert("producto creado exitósamente")
-      } */
+      } else if (result.status === 409) {
+        console.log(result);
+        alert("ya existe este producto");
+      }
     } catch (error) {
-      console.error(error.response)
+      console.error(error.response);
     }
-    
+  }; */
+
+  const createProduct = async (product) => {
+    try {
+      const form = new FormData();
+      for (let key in product) {
+        form.append(key, product[key]);
+      }
+
+      let result = await axios.post("/admin/products", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (result.response) {
+        toast.success("producto agregado");
+        console.log(result);
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error("ya existe este producto");
+        console.error(error.response);
+      } else if (error.request) {
+        toast.error("no hay respuesta del servidor");
+        console.error(error.request);
+      } else {
+        toast.error("algo salió mal, intente de nuevo");
+        console.error("Error", error.message);
+      }
+    }
   };
+
   return (
     <div className="container">
+      <Toaster
+        toastOptions={{
+          success: {
+            className: "bg-success bg-gradient text-white",
+          },
+          error: {
+            className: "bg-danger bg-gradient text-white",
+          },
+        }}
+      />
+
       <section className="py-5 bg-light">
         <div className="container">
-          <div className="row px-4 px-lg-5 py-lg-4 align-items-center">
+          <div className="row px-auto px-lg-5 py-lg-3 align-items-center">
             <div className="col-lg">
-              <h1 className="h1 text-uppercase mb-0">
-                AGREGAR PROUCTOS - ADMINISTRADOR
+              <h1 className="h2 text-uppercase mb-0">
+                nuevo producto - administrador
               </h1>
             </div>
           </div>
@@ -102,8 +147,8 @@ function NewProductPage() {
       </section>
       <div className="py-5">
         <div className="row pb-5">
-          <div className="col-lg-6 col-sm-6">
-            <form onSubmit={onSubmit}>
+          <div className="col-lg-6 col-sm-6 mx-auto">
+            {/* <form>
               <div className="mb-3">
                 <label className="form-label">slug</label>
                 <input
@@ -165,23 +210,130 @@ function NewProductPage() {
                 />
               </div>
               <div className="mb-3">
-                <button className="btn btn-primary" type="sumbit" id="BtnSave">
+                <button
+                  className="btn btn-primary"
+                  type="button" onClick={onSubmit}
+                  id="liveToastBtn"
+                >
                   Guardar
                 </button>
               </div>
-            </form>
-          </div>
-          <div className="col-lg-6 col-sm-6">
-            <img
-              className="rounded mx-auto d-block img-fluid"
-              alt="Imagen"
-              src={image}
-            ></img>
+            </form> */}
+
+            <Formik
+              initialValues={product}
+              enableReinitialize
+              validationSchema={Yup.object({
+                slug: Yup.string().required("slug requerido"),
+                name: Yup.string().required("nombre es requerido"),
+                price: Yup.number().required("precio es requerido"),
+                stock: Yup.number().required("la cantidad es requerida"),
+                description: Yup.string().required("descripción requerida"),
+              })}
+              onSubmit={async (values, actions) => {
+                await createProduct(values);
+                actions.setSubmitting(false)
+                //navigate("/lista-productos-admin");
+              }}
+            >
+              {({ handleSubmit, setFieldValue, isSubmitting }) => (
+                <Form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <label className="form-label">slug</label>
+                    <Field
+                      name="slug"
+                      placeholder="slug"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      className="alert alert-danger"
+                      role="alert"
+                      name="slug"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Nombre del producto</label>
+                    <Field
+                      name="name"
+                      placeholder="Nombre del producto"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      className="alert alert-danger"
+                      role="alert"
+                      name="name"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Precio del producto</label>
+                    <Field
+                      name="price"
+                      placeholder="Precio del producto"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      className="alert alert-danger"
+                      role="alert"
+                      name="price"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Cantidad del producto</label>
+                    <Field
+                      name="stock"
+                      placeholder="Cantidad del producto"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      className="alert alert-danger"
+                      role="alert"
+                      name="stock"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">
+                      Descripción del producto
+                    </label>
+                    <Field
+                      component="textarea"
+                      name="description"
+                      placeholder="Descripción del producto"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      component="div"
+                      className="alert alert-danger"
+                      role="alert"
+                      name="description"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">
+                      Subir imagen del producto
+                    </label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      accept="image/png, image/jpeg"
+                      name="image"
+                      onChange={(e) =>
+                        setFieldValue("image", e.target.files[0])
+                      }
+                    />
+                  </div>
+                  <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? <LoadingBox/> : "Guardar"}
+                  </button>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-export { NewProductPage };

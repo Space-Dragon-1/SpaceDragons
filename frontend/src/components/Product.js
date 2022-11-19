@@ -3,8 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export function Product(props) {
+  
 
-  const { product } = props;
+  const { product, handleDelete } = props;
+
   return (
     <div className="col-lg-3 col-sm-6">
       <div className="product text-center">
@@ -27,9 +29,9 @@ export function Product(props) {
                 </Link>
               </li>
               <li className="list-inline-item m-0 p-0">
-                <Link className="btn btn-sm btn-outline-danger" to="#!">
+                <button className="btn btn-sm btn-outline-danger" onClick={()=>handleDelete(product._id)} type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">
                   <i className="far fa-trash-alt"></i> Eliminar
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -44,10 +46,11 @@ export function Product(props) {
           </Link>
         </h6>
         <p className="text-muted">${product.price.toLocaleString("co")}</p>
-
+        <p className="text-muted">id: {product._id}</p>
         <p className="text-muted">Disponible: {product.stock}</p>
       </div>
     </div>
+    
   );
 }
 

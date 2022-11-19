@@ -29,29 +29,37 @@ export const getProductBySlug = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const { name, slug, description, price, stock } = req.body;
+    const exist = await Product.exists({ name: name }, { slug: slug })
+    if (exist){
+      console.log("producto existe", exist._id);
+      return res.sendStatus(409)
+    }else{
+      let image = null;
 
-    let image = null;
+      if (req.files.image) {
+        const fileUpload = await uploadImage(req.files.image.tempFilePath);
+        image = fileUpload.secure_url;
+        /* image = {
+          url: fileUpload.secure_url,
+          public_id: fileUpload.public_id,
+        }; */
+        await fs.remove(req.files.image.tempFilePath);
+      }
 
-    if (req.files.image) {
-      const fileUpload = await uploadImage(req.files.image.tempFilePath);
-      image = fileUpload.secure_url;
-      /* image = {
-        url: fileUpload.secure_url,
-        public_id: fileUpload.public_id,
-      }; */
-      await fs.remove(req.files.image.tempFilePath);
+      const newProduct = new Product({
+        name,
+        slug,
+        description,
+        price,
+        image,
+        stock,
+      });
+      await newProduct.save();
+      return res.json(newProduct);
     }
-
-    const newProduct = new Product({
-      name,
-      slug,
-      description,
-      price,
-      image,
-      stock,
-    });
-    await newProduct.save();
-    return res.json(newProduct);
+    
+      
+    
   } catch (error) {
     return res.status(500).json("Error: " + error.message);
   }

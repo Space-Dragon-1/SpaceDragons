@@ -1,6 +1,6 @@
-
 import axios from "axios";
-import React, { useEffect, useReducer } from "react";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
+import React, { useEffect, useReducer, useState } from "react";
 import logger from "use-reducer-logger";
 import { Heading } from "../components/Heading";
 import { LoadingBox } from "../components/LoadingBox";
@@ -15,7 +15,6 @@ const reducer = (state, action) => {
     case "FETCH_SUCCESS":
       return { ...state, products: action.payload, loading: false };
     case "FETCH_FAIL":
-
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -23,6 +22,7 @@ const reducer = (state, action) => {
 };
 
 export function ProductListAdminPage() {
+  let [controlReload, setControlReload] = useState(false);
   const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
     products: [],
     loading: true,
@@ -30,7 +30,7 @@ export function ProductListAdminPage() {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
+    var fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const result = await axios.get("/admin/products");
@@ -40,91 +40,95 @@ export function ProductListAdminPage() {
       }
     };
     fetchData();
-  }, []);
+  }, [controlReload]);
+
+  const [id, setId] = useState("");
+
+  const handleDelete = (id) => {
+    setId(id);
+    console.log("borrado", id);
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      console.log("delete", id);
+      const result = await axios.delete(`/admin/products/${id}`);
+      if (result) {
+        console.log(result);
+      }
+      let myModalDelete = document.getElementById("deleteModal");
+      let myModal = bootstrap.Modal.getInstance(myModalDelete);
+      myModal.hide();
+      setControlReload((controlReload = !controlReload));
+    } catch (error) {
+      console.error(error.response);
+      alert("producto no encontrado");
+    }
+  };
 
   return (
-
     <div className="container">
+      <div
+        className="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Eliminar Producto
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              ¿Está seguro que quiere eliminar este producto?
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => deleteProduct(id)}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <Heading />
       <section className="py-5">
         <div className="col-lg-12 order-1 order-lg-2 mb-5 mb-lg-0">
-          <div className="row mb-3 align-items-center">
-            {/* <div className="col-lg-6 mb-2 mb-lg-0">
-              <p className="text-sm text-muted mb-0">
-                Showing 1–12 of 53 results
-              </p>
-            </div> */}
-            {/* <div className="col-lg-6">
-              <ul className="list-inline d-flex align-items-center justify-content-lg-end mb-0">
-                <li className="list-inline-item text-muted me-3">
-                  <a className="reset-anchor p-0" href="#!">
-                    <i className="fas fa-th-large"></i>
-                  </a>
-                </li>
-                <li className="list-inline-item text-muted me-3">
-                  <a className="reset-anchor p-0" href="#!">
-                    <i className="fas fa-th"></i>
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <select
-                    className="selectpicker"
-                    data-customclass="form-control form-control-sm"
-                  >
-                    <option value>Sort By </option>
-                    <option value="default">Default sorting </option>
-                    <option value="popularity">Popularity </option>
-                    <option value="low-high">Price: Low to High </option>
-                    <option value="high-low">Price: High to Low </option>
-                  </select>
-                </li>
-              </ul>
-            </div> */}
-          </div>
+          <div className="row mb-3 align-items-center"></div>
           <div className="row">
             {/* <!-- PRODUCT--> */}
             {loading ? (
-              <LoadingBox/>
+              <LoadingBox />
             ) : error ? (
               <MessageBox variant="alert alert-danger">{error}</MessageBox>
             ) : (
               products.map((product) => (
-                <Product key={product.slug} product={product}/>
+                <Product
+                  key={product.slug}
+                  product={product}
+                  handleDelete={handleDelete}
+                />
               ))
             )}
-
-            {/* <Product /> */}
-
-            {/* <!-- PAGINATION--> */}
-            {/* <nav aria-label="Page navigation example">
-              <ul className="pagination justify-content-center justify-content-lg-end">
-                <li className="page-item mx-1">
-                  <a className="page-link" href="#!" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
-                  </a>
-                </li>
-                <li className="page-item mx-1 active">
-                  <a className="page-link" href="#!">
-                    1
-                  </a>
-                </li>
-                <li className="page-item mx-1">
-                  <a className="page-link" href="#!">
-                    2
-                  </a>
-                </li>
-                <li className="page-item mx-1">
-                  <a className="page-link" href="#!">
-                    3
-                  </a>
-                </li>
-                <li className="page-item ms-1">
-                  <a className="page-link" href="#!" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                  </a>
-                </li>
-              </ul>
-            </nav> */}
           </div>
         </div>
       </section>

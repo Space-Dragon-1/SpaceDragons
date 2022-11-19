@@ -1,13 +1,13 @@
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+import 'jquery';
+import 'popper.js/dist/umd/popper';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.bundle';
-import 'jquery';
-import 'popper.js/dist/umd/popper';
+import { StoreProvider } from './Store';
 import './styles/style.default.css';
 import './vendor/fontawesome/css/all.css';
-import { StoreProvider } from './Store';
 //import "./js/front";
 //import "./vendor/choices.js/public/assets/scripts/choices";
 //import "./vendor/choices.js/public/assets/styles/choices.min.css";
