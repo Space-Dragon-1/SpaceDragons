@@ -1,6 +1,9 @@
+import Axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
+import { getError } from '../utils';
+import LoadingBox from '../components/LoadingBox';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -10,15 +13,16 @@ const reducer = (state, action) => {
       return { ...state, loading: false };
     case 'CREATE_FAIL':
       return { ...state, loading: false };
+    default:
+      return state;
   }
 };
 
 export default function PaymentPage() {
   const navigate = useNavigate();
 
-  const [{ loading, error }, dispatch] = useReducer(reducer, {
+  const [{ loading }, dispatch] = useReducer(reducer, {
     loading: false,
-    error: '',
   });
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -31,7 +35,36 @@ export default function PaymentPage() {
   cart.shippingPrice = cart.itemsPrice > 100000 ? 0 : 10000;
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice;
 
-  const paymentHandler = async () => {};
+  const paymentHandler = async () => {
+    try {
+      dispatch({ type: 'CREATE_REQUEST' });
+
+      const { data } = await Axios.post(
+        '/api/sales',
+        {
+          salesItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: cart.totalPrice,
+          user: userInfo._id,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      console.log(cart.cartItems);
+      ctxDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
+      navigate(`/sales/${data.sales._id}`);
+    } catch (err) {
+      dispatch({ type: 'CREATE_FAIL' });
+      alert(getError(err));
+    }
+  };
 
   useEffect(() => {
     if (!cart.shippingAddress.paymentMethodName) {
@@ -155,6 +188,7 @@ export default function PaymentPage() {
                       >
                         Finalizar Compra
                       </button>
+                      {loading && <LoadingBox></LoadingBox>}
                     </li>
                   </ul>
                 </div>

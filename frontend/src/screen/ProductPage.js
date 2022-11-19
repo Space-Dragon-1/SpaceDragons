@@ -73,10 +73,10 @@ export function ProductPage() {
             <div className="row mb-5">
               <div className="col-lg-6">
                 <div className="row m-sm-0">
-                  <div className="col-sm-2 p-sm-0 order-2 order-sm-1 mt-2 mt-sm-0 px-xl-2">
+                  <div className="col-sm-8 p-sm-0 order-2 order-sm-1 mt-2 mb-3 mt-sm-0 px-xl-2">
                     <img
-                      className="img-fluid w-100"
-                      src="../{product.image}"
+                      className="img-fluid"
+                      src={product.image}
                       alt={product.name}
                     />
                   </div>
