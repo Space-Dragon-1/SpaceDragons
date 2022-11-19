@@ -5,12 +5,14 @@ import { DBconnection } from './db.js';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import salesRouter from './routes/salesRoutes.js';
 
 DBconnection();
 
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
+app.use('/api/sales', salesRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });

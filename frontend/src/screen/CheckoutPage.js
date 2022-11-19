@@ -121,9 +121,9 @@ export default function CheckoutPage() {
                   </div>
                   <div className="col-lg-12 form-group">
                     <h5>Metodo de Pago</h5>
-                    <div class="form-check">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="radio"
                         name="PaymentMethod"
                         id="contraentrega"
@@ -131,13 +131,11 @@ export default function CheckoutPage() {
                         checked={paymentMethodName === 'Contraentrega'}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                       />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        Contraentrega
-                      </label>
+                      <label className="form-check-label">Contraentrega</label>
                     </div>
-                    <div class="form-check">
+                    <div className="form-check">
                       <input
-                        class="form-check-input"
+                        className="form-check-input"
                         type="radio"
                         name="PaymentMethod"
                         id="efectivo"
@@ -145,9 +143,7 @@ export default function CheckoutPage() {
                         checked={paymentMethodName === 'Efectivo'}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                       />
-                      <label class="form-check-label" for="flexRadioDefault2">
-                        Efectivo
-                      </label>
+                      <label className="form-check-label">Efectivo</label>
                     </div>
                     <div className="card-body"></div>
                   </div>
