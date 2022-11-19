@@ -10,6 +10,7 @@ export default function CartPage() {
     cart: { cartItems },
   } = state;
 
+  var subTotal = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.stock < quantity) {
@@ -27,7 +28,7 @@ export default function CartPage() {
   };
 
   const checkoutHandler = () => {
-    navigate('/login?redirect=/shipping');
+    navigate('/login?redirect=/checkout');
   };
   return (
     <div>
@@ -46,7 +47,7 @@ export default function CartPage() {
           <div className="row">
             <div className="col-lg-8 mb-4 mb-lg-0">
               {cartItems.length === 0 ? (
-                <div class="alert alert-info" role="alert">
+                <div className="alert alert-info" role="alert">
                   El carrito esta vacio.{' '}
                   <Link className="text-dark" to="/tienda">
                     Ir a la tienda
@@ -127,7 +128,8 @@ export default function CartPage() {
                                   className="form-control form-control-sm border-0 shadow-0 p-0"
                                   type="text"
                                   value={item.quantity}
-                                />
+                                  onChange={(e) => item.quantity}
+                                ></input>
                                 <button
                                   className="inc-btn p-0"
                                   onClick={() =>
@@ -192,11 +194,8 @@ export default function CartPage() {
                       <strong className="text-uppercase small font-weight-bold">
                         Subtotal (
                         {cartItems.reduce((a, c) => a + c.quantity, 0)} items) :
-                        <li className="border-bottom my-2"></li>$
-                        {cartItems.reduce(
-                          (a, c) => a + c.price * c.quantity,
-                          0
-                        )}
+                        <div className="border-bottom my-2"></div>${' '}
+                        {subTotal.toLocaleString('co')}
                       </strong>
                       <span className="text-muted small"></span>
                     </li>
