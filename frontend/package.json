@@ -1,6 +1,6 @@
 {
   "name": "space-shop",
-  "proxy": "http://127.0.0.1:5001",
+  "proxy": "http://localhost:5000",
   "secure": false,
   "version": "0.1.0",
   "private": true,

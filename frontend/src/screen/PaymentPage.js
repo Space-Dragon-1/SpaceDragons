@@ -1,9 +1,9 @@
 import Axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { LoadingBox } from '../components/LoadingBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
-import LoadingBox from '../components/LoadingBox';
 
 const reducer = (state, action) => {
   switch (action.type) {
