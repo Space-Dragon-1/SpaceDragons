@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { Store } from '../Store';
 
 function ProductCustomer(props) {
@@ -30,7 +30,7 @@ function ProductCustomer(props) {
       <div className="mb-3 position-relative">
         <Link className="d-block" to={`/tienda/${product.slug}`}>
           <img
-            className="img-fluid w-100"
+            className="img-fluid img-wrapper mx-auto"
             src={product.image}
             alt={product.name}
           />
@@ -67,3 +67,4 @@ function ProductCustomer(props) {
 }
 
 export { ProductCustomer };
+

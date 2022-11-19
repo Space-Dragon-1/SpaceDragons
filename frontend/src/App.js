@@ -1,19 +1,20 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Footer } from './components/Footer';
-import { Navbar } from './components/NavBar';
-import { HomePage } from './screen/HomePage';
-import CartPage from './screen/CartPage';
-import { ProductListCustomerPage } from './screen/ProductListCustomerPage';
-import ProductPage from './screen/ProductPage';
-import { NewProductPage } from './screen/NewProductPage';
-import { NotFoundPage } from './screen/NotFoundPage';
-import { ProductListAdminPage } from './screen/ProductListAdminPage';
-import SalesHistoryPage from './screen/SalesHistoryPage';
-import './styles/app.css';
-import LoginPage from './screen/LoginPage';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Footer } from "./components/Footer";
+import { Navbar } from "./components/NavBar";
+import CartPage from "./screen/CartPage";
+import { EditProductPage } from "./screen/EditProductPage";
+import { HomePage } from "./screen/HomePage";
+import LoginPage from "./screen/LoginPage";
+import { NewProductPage } from "./screen/NewProductPage";
+import { NotFoundPage } from "./screen/NotFoundPage";
+import { ProductListAdminPage } from "./screen/ProductListAdminPage";
+import { ProductListCustomerPage } from "./screen/ProductListCustomerPage";
+import { ProductPage } from "./screen/ProductPage";
+import SalesHistoryPage from "./screen/SalesHistoryPage";
 import RegisterPage from './screen/RegisterPage';
 import CheckoutPage from './screen/CheckoutPage';
 import PaymentPage from './screen/PaymentPage';
+import "./styles/app.css";
 
 function App() {
   return (

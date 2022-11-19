@@ -12,24 +12,54 @@ export const getProducts = async (req, res) => {
   }
 };
 
+export const getProductBySlug = async (req, res) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug });
+    console.log(product);
+    if (product) {
+      res.send(product);
+    } else {
+      res.status(404).send({ message: "Producto no encontrado" });
+    }
+  } catch (error) {
+    return res.status(500).json("Error: " + error.message);
+  }
+};
+
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, stock } = req.body;
+    const { name, slug, description, price, stock } = req.body;
+    const exist = await Product.exists({ name: name }, { slug: slug })
+    if (exist){
+      console.log("producto existe", exist._id);
+      return res.sendStatus(409)
+    }else{
+      let image = null;
 
-    var image = null;
+      if (req.files.image) {
+        const fileUpload = await uploadImage(req.files.image.tempFilePath);
+        image = fileUpload.secure_url;
+        /* image = {
+          url: fileUpload.secure_url,
+          public_id: fileUpload.public_id,
+        }; */
+        await fs.remove(req.files.image.tempFilePath);
+      }
 
-    if (req.files.image) {
-      const fileUpload = await uploadImage(req.files.image.tempFilePath);
-      image = {
-        url: fileUpload.secure_url,
-        public_id: fileUpload.public_id,
-      };
-      await fs.remove(req.files.image.tempFilePath);
+      const newProduct = new Product({
+        name,
+        slug,
+        description,
+        price,
+        image,
+        stock,
+      });
+      await newProduct.save();
+      return res.json(newProduct);
     }
-
-    const newProduct = new Product({ name, description, price, image, stock });
-    await newProduct.save();
-    return res.json(newProduct);
+    
+      
+    
   } catch (error) {
     return res.status(500).json("Error: " + error.message);
   }

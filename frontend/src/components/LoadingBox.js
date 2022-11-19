@@ -1,7 +1,10 @@
-export default function LoadingBox() {
+
+export function LoadingBox() {
   return (
-    <div className="spinner-border text-warning" role="status">
-      <span className="visually-hidden">Loading...</span>
+    <div className="text-center">
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
     </div>
   );
 }
