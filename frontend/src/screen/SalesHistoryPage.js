@@ -1,16 +1,47 @@
 import React from 'react';
+import axios from 'axios';
+import { useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
-import dataJson from '../data/sales.json';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, sales: action.payload, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 
 function SalesHistoryPage() {
-  function add(dataJson) {
+  const [{ loading, error, sales }, dispatch] = useReducer(reducer, {
+    sales: [],
+    loading: true,
+    error: '',
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get('/api/sales');
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+      }
+    };
+    fetchData();
+  }, []);
+  function totalValor(arr) {
     let result = 0;
-    for (let i in dataJson) {
-      result += parseInt(dataJson[i].valor);
-    }
+    arr.map((ventas) => {
+      let totalFac = ventas.totalPrice;
+      result = result + totalFac;
+    });
     return result;
   }
-
   return (
     <div className="container">
       <section className="py-5 bg-light">
@@ -29,52 +60,48 @@ function SalesHistoryPage() {
               <table className="table text-nowrap">
                 <thead>
                   <tr>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase">Fecha</strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
+                    <th className="border-0 p-3 text-center" scope="col">
                       <strong className="text-sm text-uppercase">
-                        IdVenta
+                        ID VENTA
                       </strong>
+                    </th>
+                    <th className="border-0 p-3 text-center" scope="col">
+                      <strong className="text-sm text-uppercase">FECHA</strong>
                     </th>
                     <th className="border-0 p-3" scope="col">
                       <strong className="text-sm text-uppercase"></strong>
                     </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase">Valor</strong>
+                    <th className="border-0 p-3 text-center" scope="col">
+                      <strong className="text-sm text-uppercase">VALOR</strong>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="border-0">
-                  {dataJson.map((ventas) => (
+                  {sales.map((ventas) => (
                     <tr>
-                      <th className="ps-0 py-3 border-light" scope="row">
+                      <td className="ps-0 py-3 border-light">
                         <div className="d-flex align-items-center">
-                          <Link
-                            className="reset-anchor d-block animsition-link"
-                            to={`/ventas/${ventas.slug}`}
-                          ></Link>
                           <div className="ms-3">
                             <strong className="h6">
                               <Link
                                 className="reset-anchor animsition-link"
-                                to={`/ventas/${ventas.slug}`}
+                                to={`/ventas-realizadas/${ventas._id}`}
                               >
-                                <p>{ventas.fecha}</p>
+                                <p>{ventas._id}</p>
                               </Link>
                             </strong>
                           </div>
                         </div>
-                      </th>
-                      <td className="p-3 align-middle border-light">
-                        <p className="mb-0 small">{ventas.idVenta}</p>
+                      </td>
+                      <td className="p-3 align-middle border-light text-center d-flex justify-content-center">
+                        <p className="mb-0 small">{ventas.createdAt}</p>
                       </td>
                       <td className="p-3 align-middle border-light">
                         <div></div>
                       </td>
-                      <td className="p-3 align-middle border-light">
+                      <td className="p-3 align-middle border-light text-center d-flex justify-content-center">
                         <p className="mb-0 small">
-                          ${ventas.valor.toLocaleString('co')}
+                          ${ventas.itemsPrice.toLocaleString('co')}
                         </p>
                       </td>
                     </tr>
@@ -90,7 +117,7 @@ function SalesHistoryPage() {
                 <ul className="list-unstyled mb-0">
                   <li className="d-flex align-items-center justify-content-between mb-4">
                     <span className="lead">
-                      ${add(dataJson).toLocaleString('co')}
+                      $ {totalValor(sales).toLocaleString('co')}
                     </span>
                   </li>
                 </ul>
@@ -102,4 +129,5 @@ function SalesHistoryPage() {
     </div>
   );
 }
+
 export default SalesHistoryPage;
