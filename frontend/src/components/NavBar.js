@@ -79,7 +79,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                       className="dropdown-item border-0 transition-link"
-                      to="/ventas-realizadas"
+                      to="/admin/sales"
                     >
                       Ventas
                     </NavLink>

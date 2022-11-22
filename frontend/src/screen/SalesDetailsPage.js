@@ -1,14 +1,17 @@
-import axios from 'axios';
-import { useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import Axios from 'axios';
+import { useContext, useEffect, useReducer } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { LoadingBox } from '../components/LoadingBox';
+import { MessageBox } from '../components/MessageBox';
+import { Store } from '../Store';
 import { getError } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
-      return { ...state, loading: true };
+      return { ...state, loading: true, error: '' };
     case 'FETCH_SUCCESS':
-      return { ...state, sale: action.payload, loading: false };
+      return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -16,139 +19,141 @@ const reducer = (state, action) => {
   }
 };
 
-function SalesDetails() {
-  let clientName = (id_client) => {
-    let name = '';
-    if (id_client !== '') {
-      const fetchData = async () => {
-        dispatch({ type: 'FETCH_REQUEST' });
-        try {
-          const result = await axios.get(`/api/sales/id/client/${id_client}`);
-          dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
-          name = result.name;
-        } catch (err) {
-          dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-        }
-      };
-      fetchData();
-    } else {
-      name = 'No-name';
-    }
-    return name;
-  };
+function SalesDetailsPage() {
+  const { state } = useContext(Store);
+  const { userInfo } = state;
 
   const params = useParams();
-  const { _id } = params;
+  const { id: orderId } = params;
+  const navigate = useNavigate();
 
-  const [{ loading, error, sale }, dispatch] = useReducer(reducer, {
-    sale: [],
+  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
     loading: true,
+    order: {},
     error: '',
   });
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get(`/admin/sales/id/${_id}`);
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        dispatch({ type: 'FETCH_REQUEST' });
+        const { data } = await Axios.get(`/api/sales/${orderId}`);
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-    fetchData();
-  }, [_id]);
 
-  return (
-    <div className="container">
-      <section className="py-3 bg-light">
-        <div class="row">
-          <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
-            <div className="col-lg-6">
-              <h1 className="h4 text-uppercase mb-0">
-                Cliente
-                <p class="display-6">{clientName('')}</p>
-              </h1>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
-            <div className="col-lg-6">
-              <h1 className="h4 text-uppercase mb-0">
-                Id venta
-                <p class="display-6">{sale._id}</p>
-              </h1>
-            </div>
-          </div>
-          <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
-            <div className="col-lg-6">
-              <h1 className="h4 text-uppercase mb-0">
-                Fecha
-                <p class="display-6">{sale.date}</p>
-              </h1>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="py-5">
-        <div className="row">
-          <div className="col-lg-8 mb-4 mb-lg-0">
-            <div className="table-responsive mb-4">
-              <table
-                className="table text-nowrap text-center text-wrap"
-                id="Products"
-              >
-                <thead>
-                  <tr>
-                    <th className="border-0 p-3" scope="col" colSpan="2">
-                      <strong className="text-uppercase">Producto</strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-uppercase">Cantidad</strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-uppercase">Precio Unidad</strong>
-                    </th>
-                  </tr>
-                  <tr class="align-middle fila">
-                    <td className="border-0 p-3 mb-0 small text-uppercase">
-                      <img
-                        src="https://m.media-amazon.com/images/I/71D9ImsvEtL._UY500_.jpg"
-                        alt="Img product"
-                        height="120px"
-                        class="border rounded-top"
-                      />
-                    </td>
-                    <td className="mb-0 small p-3 align-middle border-light">
-                      Tenis Nike Running
-                    </td>
-                    <td className="border-0 p-3 text-sm text-uppercase cantidad">
-                      3
-                    </td>
-                    <td className="border-0 p-3 text-sm text-uppercase precio">
-                      500000
-                    </td>
-                  </tr>
-                </thead>
-                <tbody className="border-0"></tbody>
-              </table>
-            </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="card border-0 rounded-0 p-lg-4 bg-light">
-              <div className="card-body">
-                <h5 className="text-uppercase mb-4">Total venta</h5>
-                <ul className="list-unstyled mb-0">
-                  <li className="d-flex align-items-center justify-content-between mb-4">
-                    <span className="lead"></span>
-                  </li>
-                </ul>
+    if (!userInfo) {
+      return navigate('/login');
+    }
+    if (!order._id || (order._id && order._id !== orderId)) {
+      fetchData();
+    }
+  }, [order, userInfo, orderId, navigate]);
+
+  return loading ? (
+    <LoadingBox></LoadingBox>
+  ) : error ? (
+    <MessageBox>{error}</MessageBox>
+  ) : (
+    <div>
+      <div className="container">
+        <section className="py-3 bg-light">
+          <div class="row">
+            <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
+              <div className="col-lg-12 text-center">
+                <h1 className="h3 text-uppercase mb-3">Resumen de Venta</h1>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+          <div class="row">
+            <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
+              <div className="col-lg-6">
+                <p className="fw-bold text-uppercase mb-0">
+                  Id venta:
+                  <span className="text-muted small"> {orderId}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
+              <div className="col-lg-6">
+                <p className="text-uppercase mb-0 fw-bold">
+                  Cliente:{' '}
+                  <span className="text-muted small">
+                    {order.shippingAddress.fullName}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
+              <div className="col-lg-6">
+                <p className="fw-bold text-uppercase mb-0">
+                  Fecha:
+                  <span className="text-muted small">
+                    {order.createdAt.substring(0, 10)}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="py-5">
+          <div className="row">
+            <div className="col-lg-8 mb-4 mb-lg-0">
+              <div className="card mt-3">
+                <div className="card-body">
+                  <h5>Productos</h5>
+                  <ul className="list-group list-group-flush">
+                    {order.salesItems.map((item) => (
+                      <li className="list-group-item" key={item._id}>
+                        <div className="row align-items-center">
+                          <div className="col-md-6 text-left">
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="col-md-4 img-fluid rounded img-thumbnail"
+                            ></img>
+                            <Link
+                              to={`/tienda/${item.slug}`}
+                              className="col-md-8 ms-2"
+                            >
+                              {item.name}
+                            </Link>
+                          </div>
+                          <div className="col-md-3 text-center">
+                            <span>{item.quantity}</span>
+                          </div>
+                          <div className="col-md-3 text-center">
+                            <span>{item.price.toLocaleString('co')}</span>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="card border-0 rounded-0 p-lg-4 bg-light">
+                <div className="card-body">
+                  <h5 className="text-uppercase mb-4 text-end">Total Venta</h5>
+                  <ul className="list-unstyled mb-0">
+                    <li className="d-flex align-items-center justify-content-between mb-4">
+                      <div className="col text-end">
+                        {' '}
+                        $ {order.totalPrice.toLocaleString('co')}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
@@ -164,4 +169,4 @@ function SalesDetails() {
   return total
 }*/
 
-export default SalesDetails;
+export default SalesDetailsPage;

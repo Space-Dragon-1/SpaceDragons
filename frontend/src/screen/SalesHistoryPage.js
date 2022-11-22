@@ -1,7 +1,10 @@
-import React from 'react';
 import axios from 'axios';
-import { useEffect, useReducer } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useReducer } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { LoadingBox } from '../components/LoadingBox';
+import { MessageBox } from '../components/MessageBox';
+import { Store } from '../Store';
+import { getError } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -17,23 +20,32 @@ const reducer = (state, action) => {
 };
 
 function SalesHistoryPage() {
+  const navigate = useNavigate();
+  const { state } = useContext(Store);
+  const { userInfo } = state;
   const [{ loading, error, sales }, dispatch] = useReducer(reducer, {
-    sales: [],
     loading: true,
     error: '',
   });
+
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/sales');
-        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+        dispatch({ type: 'FETCH_REQUEST' });
+        const { data } = await axios.get(`/api/sales`, {
+          headers: { Authorization: `Bearer ${userInfo}` },
+        });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+        dispatch({
+          type: 'FETCH_FAIL',
+          payload: getError(err),
+        });
       }
     };
     fetchData();
-  }, []);
+  }, [userInfo]);
+
   function totalValor(arr) {
     let result = 0;
     arr.map((ventas) => {
@@ -53,79 +65,107 @@ function SalesHistoryPage() {
           </div>
         </div>
       </section>
-      <section className="py-5">
-        <div className="row">
-          <div className="col-lg-8 mb-4 mb-lg-0">
-            <div className="table-responsive mb-4">
-              <table className="table text-nowrap">
-                <thead>
-                  <tr>
-                    <th className="border-0 p-3 text-center" scope="col">
-                      <strong className="text-sm text-uppercase">
-                        ID VENTA
-                      </strong>
-                    </th>
-                    <th className="border-0 p-3 text-center" scope="col">
-                      <strong className="text-sm text-uppercase">FECHA</strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase"></strong>
-                    </th>
-                    <th className="border-0 p-3 text-center" scope="col">
-                      <strong className="text-sm text-uppercase">VALOR</strong>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="border-0">
-                  {sales.map((ventas) => (
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox></MessageBox>
+      ) : (
+        <section className="py-5">
+          <div className="row">
+            <div className="col-lg-8 mb-4 mb-lg-0">
+              <div className="table-responsive mb-4">
+                <table className="table text-nowrap">
+                  <thead>
                     <tr>
-                      <td className="ps-0 py-3 border-light">
-                        <div className="d-flex align-items-center">
-                          <div className="ms-3">
-                            <strong className="h6">
-                              <Link
-                                className="reset-anchor animsition-link"
-                                to={`/ventas-realizadas/${ventas._id}`}
-                              >
-                                <p>{ventas._id}</p>
-                              </Link>
-                            </strong>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="p-3 align-middle border-light text-center d-flex justify-content-center">
-                        <p className="mb-0 small">{ventas.createdAt}</p>
-                      </td>
-                      <td className="p-3 align-middle border-light">
-                        <div></div>
-                      </td>
-                      <td className="p-3 align-middle border-light text-center d-flex justify-content-center">
-                        <p className="mb-0 small">
-                          ${ventas.itemsPrice.toLocaleString('co')}
-                        </p>
-                      </td>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          ID VENTA
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          USUARIO
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          FECHA
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          VALOR
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col"></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="border-0">
+                    {sales.map((sale) => (
+                      <tr key={sale._id}>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <div className="align-items-center">
+                            <div className="ms-3">
+                              <strong>
+                                <Link
+                                  className="reset-anchor animsition-link"
+                                  to={`/sales/${sale._id}`}
+                                >
+                                  <p>{sale._id}</p>
+                                </Link>
+                              </strong>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <p className="mb-0 small">
+                            {sale.user ? sale.user.name : 'Default'}
+                          </p>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <p className="mb-0 small">
+                            {sale.createdAt.substring(0, 10)}
+                          </p>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <p className="mb-0 small">
+                            ${sale.totalPrice.toLocaleString('co')}
+                          </p>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <button
+                            className="btn btn-secondary"
+                            type="button"
+                            onClick={() => {
+                              navigate(`/sales/${sale._id}`);
+                            }}
+                          >
+                            Detalles
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="card border-0 rounded-0 p-lg-4 bg-light">
-              <div className="card-body">
-                <h5 className="text-uppercase mb-4">Total Ventas</h5>
-                <ul className="list-unstyled mb-0">
-                  <li className="d-flex align-items-center justify-content-between mb-4">
-                    <span className="lead">
-                      $ {totalValor(sales).toLocaleString('co')}
-                    </span>
-                  </li>
-                </ul>
+            <div className="col-lg-4">
+              <div className="card border-0 rounded-0 p-lg-4 bg-light">
+                <div className="card-body">
+                  <h5 className="text-uppercase mb-4">Total Ventas</h5>
+                  <ul className="list-unstyled mb-0">
+                    <li className="d-flex align-items-center justify-content-between mb-4">
+                      <span className="lead">
+                        $ {totalValor(sales).toLocaleString('co')}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }
