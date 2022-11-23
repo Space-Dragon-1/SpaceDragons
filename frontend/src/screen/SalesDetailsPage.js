@@ -99,7 +99,7 @@ function SalesDetailsPage() {
   async function payOrderHandler() {
     try {
       dispatch({ type: 'PAY_REQUEST' });
-      const { data } = Axios.put(
+      const { data } = await Axios.put(
         `/api/sales/${order._id}/pay`,
         {},
         {
@@ -108,7 +108,6 @@ function SalesDetailsPage() {
       );
       dispatch({ type: 'PAY_SUCCESS', payload: data });
       toast.success('¡Pedido ha sido pagado correctamente!');
-      window.location.reload();
     } catch (error) {
       toast.error(getError(error));
       dispatch({ type: 'PAY_FAIL' });
@@ -117,7 +116,7 @@ function SalesDetailsPage() {
   async function deliverOrderHandler() {
     try {
       dispatch({ type: 'DELIVER_REQUEST' });
-      const { data } = Axios.put(
+      const { data } = await Axios.put(
         `/api/sales/${order._id}/deliver`,
         {},
         {
