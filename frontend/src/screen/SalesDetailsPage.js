@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { toast } from 'react-toastify';
 import { useContext, useEffect, useReducer } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LoadingBox } from '../components/LoadingBox';
@@ -14,6 +15,23 @@ const reducer = (state, action) => {
       return { ...state, loading: false, order: action.payload, error: '' };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+    case 'PAY_REQUEST':
+      return { ...state, loadingPay: true, error: '' };
+    case 'PAY_SUCCESS':
+      return { ...state, loadingPay: false, successPay: true };
+    case 'PAY_FAIL':
+      return { ...state, loadingPay: false };
+    case 'PAY_RESET':
+      return { ...state, loadingPay: false, successPay: false };
+
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return { ...state, loadingDeliver: false, successDeliver: false };
     default:
       return state;
   }
@@ -27,10 +45,23 @@ function SalesDetailsPage() {
   const { id: orderId } = params;
   const navigate = useNavigate();
 
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
+  const [
+    {
+      loading,
+      error,
+      order,
+      successPay,
+      loadingPay,
+      loadingDeliver,
+      successDeliver,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
     loading: true,
     order: {},
     error: '',
+    successPay: false,
+    loadingPay: false,
   });
 
   useEffect(() => {
@@ -49,10 +80,57 @@ function SalesDetailsPage() {
     if (!userInfo) {
       return navigate('/login');
     }
-    if (!order._id || (order._id && order._id !== orderId)) {
+    if (
+      !order._id ||
+      successPay ||
+      successDeliver ||
+      (order._id && order._id !== orderId)
+    ) {
       fetchData();
+      if (successPay) {
+        dispatch({ type: 'PAY_RESET' });
+      }
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' });
+      }
     }
-  }, [order, userInfo, orderId, navigate]);
+  }, [order, userInfo, orderId, navigate, successPay, successDeliver]);
+
+  async function payOrderHandler() {
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = Axios.put(
+        `/api/sales/${order._id}/pay`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: 'PAY_SUCCESS', payload: data });
+      toast.success('¡Pedido ha sido pagado correctamente!');
+      window.location.reload();
+    } catch (error) {
+      toast.error(getError(error));
+      dispatch({ type: 'PAY_FAIL' });
+    }
+  }
+  async function deliverOrderHandler() {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+      const { data } = Axios.put(
+        `/api/sales/${order._id}/deliver`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: 'DELIVER_SUCCESS', payload: data });
+      toast.success('¡Pedido ha sido despachado correctamente!');
+    } catch (error) {
+      toast.error(getError(error));
+      dispatch({ type: 'DELIVER_FAIL' });
+    }
+  }
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -119,7 +197,7 @@ function SalesDetailsPage() {
                   <p className="card-text">
                     {order.isDelivered ? (
                       <MessageBox variant="success">
-                        Enviado el: {order.devliveredAt}
+                        Enviado el: {order.deliveredAt.substring(0, 10)}
                       </MessageBox>
                     ) : (
                       <MessageBox variant="danger">No despachado</MessageBox>
@@ -137,7 +215,7 @@ function SalesDetailsPage() {
                   <p className="card-text">
                     {order.isPaid ? (
                       <MessageBox variant="success">
-                        Pagado el: {order.paidAt}
+                        Pagado el: {order.paidAt.substring(0, 10)}
                       </MessageBox>
                     ) : (
                       <MessageBox variant="danger">Sin pago</MessageBox>
@@ -205,6 +283,34 @@ function SalesDetailsPage() {
                         $ {order.totalPrice.toLocaleString('co')}
                       </span>
                     </li>
+                    {userInfo.isAdmin && !order.isPaid && (
+                      <li className="align-items-center justify-content-between">
+                        {loadingPay && <LoadingBox></LoadingBox>}
+                        <div className="d-grid gap-2 mt-3">
+                          <button
+                            className="btn btn-warning"
+                            type="button"
+                            onClick={payOrderHandler}
+                          >
+                            Confirmar Pago
+                          </button>
+                        </div>
+                      </li>
+                    )}
+                    {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                      <li className="align-items-center justify-content-between">
+                        {loadingDeliver && <LoadingBox></LoadingBox>}
+                        <div className="d-grid gap-2 mt-3">
+                          <button
+                            className="btn btn-warning"
+                            type="button"
+                            onClick={deliverOrderHandler}
+                          >
+                            Despachar Pedido
+                          </button>
+                        </div>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>

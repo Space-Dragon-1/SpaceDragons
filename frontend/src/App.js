@@ -21,34 +21,94 @@ import OrderHistoryPage from './screen/OrderHistoryPage';
 import SalesDetailsPage from './screen/SalesDetailsPage';
 import SalesHistoryPage from './screen/SalesHistoryPage';
 import ProfilePage from './screen/ProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
     <div className="page-holder">
       <BrowserRouter>
-        <ToastContainer position="bottom-center" limit={1} />
+        <ToastContainer position="top-center" limit={1} />
         <Navbar />
         <Routes>
+          {/* General Routes */}
           <Route path="/" element={<HomePage />} />
-          <Route path="admin/new-product" element={<NewProductPage />} />
-          <Route
-            path="/admin/product-list"
-            element={<ProductListAdminPage />}
-          />
-          <Route path="/admin/product/:slug" element={<EditProductPage />} />
-          <Route path="/admin/sales" element={<SalesHistoryPage />} />
-          <Route path="/admin/sales/:id" element={<SalesDetailsPage />} />
           <Route path="/tienda" element={<ProductListCustomerPage />} />
           <Route path="/tienda/:slug" element={<ProductPage />} />
           <Route path="/carrito" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/order/:id" element={<OrderDetailsPage />} />
-          <Route path="/my-orders" element={<OrderHistoryPage />} />
+
+          {/* Client Routes */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <ProtectedRoute>
+                <OrderDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-orders"
+            element={
+              <ProtectedRoute>
+                <OrderHistoryPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
+
+          {/* Admin Routes */}
+          <Route
+            path="admin/new-product"
+            element={
+              <AdminRoute>
+                <NewProductPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/product-list"
+            element={
+              <AdminRoute>
+                <ProductListAdminPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/product/:slug"
+            element={
+              <AdminRoute>
+                <EditProductPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/sales"
+            element={
+              <AdminRoute>
+                <SalesHistoryPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/sales/:id"
+            element={
+              <AdminRoute>
+                <SalesDetailsPage />
+              </AdminRoute>
+            }
+          />
         </Routes>
         <Footer />
       </BrowserRouter>

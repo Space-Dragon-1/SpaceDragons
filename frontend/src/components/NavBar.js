@@ -50,42 +50,43 @@ function Navbar() {
                     Tienda
                   </NavLink>
                 </li>
-
-                <li className="nav-item dropdown">
-                  <NavLink
-                    className="nav-link dropdown-toggle"
-                    id="pagesDropdown"
-                    to="/null"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Admin
-                  </NavLink>
-                  <div
-                    className="dropdown-menu mt-3 shadow-sm"
-                    aria-labelledby="pagesDropdown"
-                  >
+                {userInfo && userInfo.isAdmin && (
+                  <li className="nav-item dropdown">
                     <NavLink
-                      className="dropdown-item border-0 transition-link"
-                      to="/admin/product-list"
+                      className="nav-link dropdown-toggle"
+                      id="pagesDropdown"
+                      to="/null"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      Todos los productos
+                      Admin
                     </NavLink>
-                    <NavLink
-                      className="dropdown-item border-0 transition-link"
-                      to="/admin/new-product"
+                    <div
+                      className="dropdown-menu mt-3 shadow-sm"
+                      aria-labelledby="pagesDropdown"
                     >
-                      Agregar nuevo producto
-                    </NavLink>
-                    <NavLink
-                      className="dropdown-item border-0 transition-link"
-                      to="/admin/sales"
-                    >
-                      Ventas
-                    </NavLink>
-                  </div>
-                </li>
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="/admin/product-list"
+                      >
+                        Todos los productos
+                      </NavLink>
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="/admin/new-product"
+                      >
+                        Agregar nuevo producto
+                      </NavLink>
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="/admin/sales"
+                      >
+                        Ventas
+                      </NavLink>
+                    </div>
+                  </li>
+                )}
               </ul>
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
@@ -155,6 +156,7 @@ function Navbar() {
                     </NavLink>
                   </li>
                 )}
+
                 <li></li>
               </ul>
             </div>

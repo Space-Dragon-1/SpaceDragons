@@ -33,7 +33,7 @@ function SalesHistoryPage() {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/sales`, {
-          headers: { Authorization: `Bearer ${userInfo}` },
+          headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -72,7 +72,21 @@ function SalesHistoryPage() {
       ) : (
         <section className="py-5">
           <div className="row">
-            <div className="col-lg-8 mb-4 mb-lg-0">
+            <div className="col-lg-12 text-center">
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="text-uppercase mb-4">Total Ventas</h5>
+                  <p className="card-text">
+                    <span className="lead">
+                      $ {totalValor(sales).toLocaleString('co')}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-12 mb-4 mb-lg-0">
               <div className="table-responsive mb-4">
                 <table className="table text-nowrap">
                   <thead>
@@ -97,7 +111,21 @@ function SalesHistoryPage() {
                           VALOR
                         </strong>
                       </th>
-                      <th className="border-0 p-3 text-center" scope="col"></th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          PAGADO
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          ENVIADO
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          ACCIONES
+                        </strong>
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="border-0">
@@ -119,7 +147,7 @@ function SalesHistoryPage() {
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
                           <p className="mb-0 small">
-                            {sale.user ? sale.user.name : 'Default'}
+                            {sale.user ? sale.user.name : 'ELIMINADO'}
                           </p>
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
@@ -130,6 +158,18 @@ function SalesHistoryPage() {
                         <td className="ps-0 py-3 border-light text-center align-middle">
                           <p className="mb-0 small">
                             ${sale.totalPrice.toLocaleString('co')}
+                          </p>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <p className="mb-0 small">
+                            {sale.isPaid ? sale.paidAt.substring(0, 10) : 'No'}
+                          </p>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
+                          <p className="mb-0 small">
+                            {sale.isDelivered
+                              ? sale.deliveredAt.substring(0, 10)
+                              : 'No'}
                           </p>
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
@@ -147,20 +187,6 @@ function SalesHistoryPage() {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="card border-0 rounded-0 p-lg-4 bg-light">
-                <div className="card-body">
-                  <h5 className="text-uppercase mb-4">Total Ventas</h5>
-                  <ul className="list-unstyled mb-0">
-                    <li className="d-flex align-items-center justify-content-between mb-4">
-                      <span className="lead">
-                        $ {totalValor(sales).toLocaleString('co')}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
