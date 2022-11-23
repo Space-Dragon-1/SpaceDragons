@@ -52,16 +52,25 @@ export function EditProductPage() {
         form.append(key, product[key]);
       }
 
-      let result = await axios.put(`/admin/products/${id}`, form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios
+        .put(`/admin/products/${id}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          toast.success("producto actualizado");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          toast.error("algo salió mal, intente de nuevo");
+          console.error(error.response);
+        });
 
-      if (result.response) {
+      /* if (result.response) {
         toast.success("producto actualizado");
         console.log(result);
-      }
+      } */
     } catch (error) {
       if (error.response) {
         toast.error("ya existe este producto");
@@ -83,16 +92,16 @@ export function EditProductPage() {
   ) : (
     <section className="py-5">
       <div className="container">
-      <Toaster
-        toastOptions={{
-          success: {
-            className: "bg-success bg-gradient text-white",
-          },
-          error: {
-            className: "bg-danger bg-gradient text-white",
-          },
-        }}
-      />
+        <Toaster
+          toastOptions={{
+            success: {
+              className: "bg-success bg-gradient text-white",
+            },
+            error: {
+              className: "bg-danger bg-gradient text-white",
+            },
+          }}
+        />
         <div className="row mb-5">
           <div className="col-lg-6 col-sm-6">
             <Formik
@@ -108,7 +117,7 @@ export function EditProductPage() {
               onSubmit={async (values, actions) => {
                 await updateProduct(product._id, values);
                 //navigate("/lista-productos-admin");
-                actions.setSubmitting(false)
+                actions.setSubmitting(false);
               }}
             >
               {({ handleSubmit, setFieldValue, isSubmitting }) => (
@@ -200,8 +209,12 @@ export function EditProductPage() {
                       }
                     />
                   </div>
-                  <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? <LoadingBox/> : "Actualizar"}
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? <LoadingBox /> : "Actualizar"}
                   </button>
                 </Form>
               )}

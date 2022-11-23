@@ -97,16 +97,25 @@ export function NewProductPage() {
         form.append(key, product[key]);
       }
 
-      let result = await axios.post("/admin/products", form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios
+        .post("/admin/products", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          toast.success("producto agregado");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          toast.error("ya existe este producto");
+          console.error(error.response);
+        });
 
-      if (result.response) {
+      /* if (result.response) {
         toast.success("producto agregado");
         console.log(result);
-      }
+      } */
     } catch (error) {
       if (error.response) {
         toast.error("ya existe este producto");
@@ -232,7 +241,16 @@ export function NewProductPage() {
               })}
               onSubmit={async (values, actions) => {
                 await createProduct(values);
-                actions.setSubmitting(false)
+                actions.setSubmitting(false);
+                actions.resetForm({
+                  values: {
+                    slug: "",
+                    name: "",
+                    price: "",
+                    stock: "",
+                    description: "",
+                  },
+                });
                 //navigate("/lista-productos-admin");
               }}
             >
@@ -325,8 +343,12 @@ export function NewProductPage() {
                       }
                     />
                   </div>
-                  <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? <LoadingBox/> : "Guardar"}
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? <LoadingBox /> : "Guardar"}
                   </button>
                 </Form>
               )}
