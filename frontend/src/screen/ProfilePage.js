@@ -1,22 +1,35 @@
-import Axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useContext, useReducer, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Store } from '../Store';
+import { toast } from 'react-toastify';
 import { getError } from '../utils';
+import axios from 'axios';
 
-export default function RegisterPage() {
-  const navigate = useNavigate();
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'UPDATE_REQUEST':
+      return { ...state, loadingUpdate: true };
+    case 'UPDATE_SUCCESS':
+      return { ...state, loadingUpdate: false };
+    case 'UPDATE_FAIL':
+      return { ...state, loadingUpdate: false };
+    default:
+      return state;
+  }
+};
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+export default function ProfilePage() {
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+  const [name, setName] = useState(userInfo.name);
+  const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
+    loacdingUpdate: false,
+  });
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -24,28 +37,34 @@ export default function RegisterPage() {
       return;
     }
     try {
-      const { data } = await Axios.post('api/users/register', {
-        name,
-        email,
-        password,
-      });
-      ctxDispatch({ type: 'USER_LOGIN', payload: data });
+      const { data } = await axios.put(
+        'api/users/profile',
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: 'UPDATE_SUCCESS' });
+      ctxDispatch({ type: 'USER_LOGGUED', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate(redirect || '/');
+      toast.success('Información actualizada correctamente');
     } catch (err) {
-      alert(getError(err));
+      dispatch({
+        type: 'UPDATE_FAIL',
+      });
+      toast.error(getError(err));
     }
   };
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [navigate, redirect, userInfo]);
+
   return (
     <div className="container w-100 m-auto pt-5 pb-5">
       <div className="row justify-content-center">
         <div className="col-6">
-          <h1 className="my-3">Registrarse</h1>
+          <h1 className="my-3">Mi Perfil</h1>
           <form onSubmit={submitHandler}>
             <div className="form-group mt-2">
               <label>Nombre</label>
@@ -54,7 +73,7 @@ export default function RegisterPage() {
                 id="name"
                 name="name"
                 type="name"
-                placeholder="Nombre"
+                value={name}
                 required
                 onChange={(e) => setName(e.target.value)}
               ></input>
@@ -66,7 +85,7 @@ export default function RegisterPage() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="hola@tucorreo.com"
+                value={email}
                 required
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -89,7 +108,7 @@ export default function RegisterPage() {
                 className="form-control"
                 id="confirm-password"
                 name="confirm-password"
-                type="confirm-password"
+                type="password"
                 placeholder="Confirmar contraseña"
                 required
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -97,15 +116,11 @@ export default function RegisterPage() {
             </div>
             <div className="mb-3">
               <button
-                className="w-100 btn btn-lg btn-primary mt-3"
+                className="w-100 btn btn-lg btn-success mt-3"
                 type="submit"
               >
-                Registrarse
+                Guardar
               </button>
-            </div>
-            <div className="mb-3">
-              Ya tienes una cuenta?{' '}
-              <Link to={`/login?redirect=${redirect}`}>Iniciar Sesión</Link>
             </div>
           </form>
         </div>

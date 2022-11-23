@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Store } from '../Store';
 
 function Navbar() {
@@ -10,6 +10,7 @@ function Navbar() {
     ctxDispatch({ type: 'USER_LOGOUT' });
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
+    window.location.href = '/login';
   };
   return (
     <React.Fragment>
@@ -67,13 +68,13 @@ function Navbar() {
                   >
                     <NavLink
                       className="dropdown-item border-0 transition-link"
-                      to="/lista-productos-admin"
+                      to="/admin/product-list"
                     >
                       Todos los productos
                     </NavLink>
                     <NavLink
                       className="dropdown-item border-0 transition-link"
-                      to="/nuevo-producto"
+                      to="/admin/new-product"
                     >
                       Agregar nuevo producto
                     </NavLink>
@@ -114,13 +115,34 @@ function Navbar() {
                     <ul className="dropdown-menu mt-3 shadow-sm">
                       <li>
                         <NavLink
+                          className="dropdown-item border-0 transition-link"
+                          to="/profile"
+                        >
+                          <i className="me-1 text-gray fw-normal"></i>
+                          Perfil
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          className="dropdown-item border-0 transition-link"
+                          to="/my-orders"
+                        >
+                          <i className="fas fa-dashboard me-1 text-gray fw-normal"></i>
+                          Mis ordenes
+                        </NavLink>
+                      </li>
+                      <li>
+                        <hr class="dropdown-divider opacity-75" />
+                      </li>
+                      <li>
+                        <Link
                           className="dropdown-item"
                           to="#logout"
                           onClick={logoutHandler}
                         >
-                          <i className="fas fa-close me-1 text-gray fw-normal"></i>
+                          <i className="fa fa-user-minus text-white fw-normal"></i>
                           Cerrar sesion
-                        </NavLink>
+                        </Link>
                       </li>
                     </ul>
                   </li>

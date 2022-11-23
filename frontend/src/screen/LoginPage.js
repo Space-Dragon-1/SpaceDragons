@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import { getError } from '../utils';
@@ -26,7 +27,7 @@ export default function LoginPage() {
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect || '/');
     } catch (err) {
-      alert(getError(err));
+      toast.error(getError(err));
     }
   };
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function LoginPage() {
   return (
     <div className="container w-100 m-auto pt-5 pb-5">
       <div className="row justify-content-center">
-        <div className="col-4">
+        <div className="col-6">
           <h1 className="my-3">Iniciar Session</h1>
           <form onSubmit={submitHandler}>
             <div className="form-group">

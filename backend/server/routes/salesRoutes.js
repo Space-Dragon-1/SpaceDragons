@@ -1,5 +1,6 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
+import { isAuth } from '../../utils.js';
 import Sales from '../models/salesModel.js';
 
 const salesRouter = express.Router();
@@ -18,7 +19,7 @@ salesRouter.get(
 
 salesRouter.post(
   '/',
-
+  isAuth,
   expressAsyncHandler(async (req, res) => {
     const newSales = new Sales({
       salesItems: req.body.salesItems.map((x) => ({ ...x, product: x._id })),
@@ -30,6 +31,7 @@ salesRouter.post(
     });
 
     const sales = await newSales.save();
+
     res
       .status(201)
       .send({ message: 'Factura creada Satisfactoriamente', sales });
@@ -37,13 +39,23 @@ salesRouter.post(
 );
 
 salesRouter.get(
+  '/mine',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Sales.find({ user: req.user._id });
+    res.send(orders);
+  })
+);
+
+salesRouter.get(
   '/:id',
+  isAuth,
   expressAsyncHandler(async (req, res) => {
     try {
       const order = await Sales.findById(req.params.id);
       res.send(order);
     } catch (error) {
-      return res.status(404).send({ message: 'Venta no Encontrada ', error });
+      return res.status(404).send({ message: 'Orden no Encontrada' });
     }
   })
 );

@@ -19,7 +19,7 @@ const reducer = (state, action) => {
   }
 };
 
-function SalesDetailsPage() {
+function OrderDetailsPage() {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -81,17 +81,17 @@ function SalesDetailsPage() {
           </div>
           <div class="row">
             <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
-              <div className="col-lg-12">
+              <div className="col-lg-6">
                 <p className="text-uppercase mb-0 fw-bold">
-                  Usuario:{' '}
+                  Cliente:{' '}
                   <span className="text-muted small">
-                    {order.user ? order.user.name : 'Default'}
+                    {order.shippingAddress.fullName}
                   </span>
                 </p>
               </div>
             </div>
             <div className="col px-4 px-lg-5 py-lg-2 align-items-center">
-              <div className="col-lg-12">
+              <div className="col-lg-6">
                 <p className="fw-bold text-uppercase mb-0">
                   Fecha:
                   <span className="text-muted small">
@@ -127,25 +127,23 @@ function SalesDetailsPage() {
                   </p>
                 </div>
               </div>
-              <div className="card mt-3">
-                <div className="card-body">
-                  <h5>Datos de Pago</h5>
-                  <p className="card-text">
-                    <strong>Metodo: </strong>{' '}
-                    {order.shippingAddress.paymentMethodName} <br />
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h4 class="card-title">Información de pago</h4>
+                  <p class="card-text">
+                    <strong>Metodo de pago: </strong>{' '}
+                    {order.shippingAddress.paymentMethodName}
                   </p>
-                  <p className="card-text">
-                    {order.isPaid ? (
-                      <MessageBox variant="success">
-                        Pagado el: {order.paidAt}
-                      </MessageBox>
-                    ) : (
-                      <MessageBox variant="danger">Sin pago</MessageBox>
-                    )}
-                  </p>
+                  {order.isPaid ? (
+                    <MessageBox variand="success">
+                      Orden cancelada el: {order.paidAt}
+                    </MessageBox>
+                  ) : (
+                    <MessageBox variant="danger">Pendiente de pago</MessageBox>
+                  )}
                 </div>
               </div>
-              <div className="card mt-3">
+              <div className="card">
                 <div className="card-body">
                   <h5>Productos</h5>
                   <ul className="list-group list-group-flush">
@@ -181,7 +179,7 @@ function SalesDetailsPage() {
             <div className="col-lg-4">
               <div className="card border-0 rounded-0 p-lg-4 bg-light">
                 <div className="card-body">
-                  <h5 className="text-uppercase mb-4">Total Venta</h5>
+                  <h5 className="text-uppercase mb-4">Resumen de su Orden</h5>
                   <ul className="list-unstyled mb-0">
                     <li className="d-flex align-items-center justify-content-between">
                       <strong className="small fw-bold">Subtotal</strong>
@@ -227,4 +225,4 @@ function SalesDetailsPage() {
   return total
 }*/
 
-export default SalesDetailsPage;
+export default OrderDetailsPage;

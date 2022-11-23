@@ -19,7 +19,7 @@ const reducer = (state, action) => {
   }
 };
 
-function SalesHistoryPage() {
+function OrderHistoryPage() {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
@@ -29,11 +29,14 @@ function SalesHistoryPage() {
   });
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate('/login?redirect=/my-orders');
+    }
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/sales`, {
-          headers: { Authorization: `Bearer ${userInfo}` },
+        const { data } = await axios.get(`/api/sales/mine`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -46,21 +49,13 @@ function SalesHistoryPage() {
     fetchData();
   }, [userInfo]);
 
-  function totalValor(arr) {
-    let result = 0;
-    arr.map((ventas) => {
-      let totalFac = ventas.totalPrice;
-      result = result + totalFac;
-    });
-    return result;
-  }
   return (
     <div className="container">
       <section className="py-5 bg-light">
         <div className="container">
           <div className="row px-4 px-lg-5 py-lg-4 align-items-center">
             <div className="col-lg-6">
-              <h1 className="h2 text-uppercase mb-0">Ventas</h1>
+              <h1 className="h2 text-uppercase mb-0">Mis Compras</h1>
             </div>
           </div>
         </div>
@@ -68,11 +63,11 @@ function SalesHistoryPage() {
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
-        <MessageBox></MessageBox>
+        <MessageBox variant="danger"></MessageBox>
       ) : (
         <section className="py-5">
           <div className="row">
-            <div className="col-lg-8 mb-4 mb-lg-0">
+            <div className="col-lg-12 mb-4 mb-lg-0">
               <div className="table-responsive mb-4">
                 <table className="table text-nowrap">
                   <thead>
@@ -80,11 +75,6 @@ function SalesHistoryPage() {
                       <th className="border-0 p-3 text-center" scope="col">
                         <strong className="text-sm text-uppercase">
                           ID VENTA
-                        </strong>
-                      </th>
-                      <th className="border-0 p-3 text-center" scope="col">
-                        <strong className="text-sm text-uppercase">
-                          USUARIO
                         </strong>
                       </th>
                       <th className="border-0 p-3 text-center" scope="col">
@@ -97,7 +87,16 @@ function SalesHistoryPage() {
                           VALOR
                         </strong>
                       </th>
-                      <th className="border-0 p-3 text-center" scope="col"></th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          ENVÍO
+                        </strong>
+                      </th>
+                      <th className="border-0 p-3 text-center" scope="col">
+                        <strong className="text-sm text-uppercase">
+                          ACCIONES
+                        </strong>
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="border-0">
@@ -109,18 +108,13 @@ function SalesHistoryPage() {
                               <strong>
                                 <Link
                                   className="reset-anchor animsition-link"
-                                  to={`/admin/sales/${sale._id}`}
+                                  to={`/order/${sale._id}`}
                                 >
                                   <p>{sale._id}</p>
                                 </Link>
                               </strong>
                             </div>
                           </div>
-                        </td>
-                        <td className="ps-0 py-3 border-light text-center align-middle">
-                          <p className="mb-0 small">
-                            {sale.user ? sale.user.name : 'Default'}
-                          </p>
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
                           <p className="mb-0 small">
@@ -133,34 +127,29 @@ function SalesHistoryPage() {
                           </p>
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
+                          <p className="mb-0 small">
+                            {sale.isDelivered ? (
+                              <span>Enviado el: {sale.devliveredAt}</span>
+                            ) : (
+                              <span>No despachado</span>
+                            )}
+                          </p>
+                        </td>
+                        <td className="ps-0 py-3 border-light text-center align-middle">
                           <button
                             className="btn btn-secondary"
                             type="button"
                             onClick={() => {
-                              navigate(`/admin/sales/${sale._id}`);
+                              navigate(`/order/${sale._id}`);
                             }}
                           >
-                            Detalles
+                            Detalle
                           </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="card border-0 rounded-0 p-lg-4 bg-light">
-                <div className="card-body">
-                  <h5 className="text-uppercase mb-4">Total Ventas</h5>
-                  <ul className="list-unstyled mb-0">
-                    <li className="d-flex align-items-center justify-content-between mb-4">
-                      <span className="lead">
-                        $ {totalValor(sales).toLocaleString('co')}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
@@ -170,4 +159,4 @@ function SalesHistoryPage() {
   );
 }
 
-export default SalesHistoryPage;
+export default OrderHistoryPage;
