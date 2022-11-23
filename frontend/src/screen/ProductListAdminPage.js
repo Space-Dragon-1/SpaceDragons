@@ -1,20 +1,19 @@
-import axios from "axios";
-import bootstrap from "bootstrap/dist/js/bootstrap.bundle";
-import React, { useEffect, useReducer, useState } from "react";
-import logger from "use-reducer-logger";
-import { Heading } from "../components/Heading";
-import { LoadingBox } from "../components/LoadingBox";
-import { MessageBox } from "../components/MessageBox";
-import { Product } from "../components/Product";
-import { getError } from "../utils";
+import axios from 'axios';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Heading } from '../components/Heading';
+import { LoadingBox } from '../components/LoadingBox';
+import { MessageBox } from '../components/MessageBox';
+import { Product } from '../components/Product';
+import { getError } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_REQUEST":
+    case 'FETCH_REQUEST':
       return { ...state, loading: true };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return { ...state, products: action.payload, loading: false };
-    case "FETCH_FAIL":
+    case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -23,46 +22,46 @@ const reducer = (state, action) => {
 
 export function ProductListAdminPage() {
   let [controlReload, setControlReload] = useState(false);
-  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
     loading: true,
-    error: "",
+    error: '',
   });
 
   useEffect(() => {
     var fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
+      dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get("/admin/products");
-        dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+        const result = await axios.get('/admin/products');
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
-        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
     fetchData();
   }, [controlReload]);
 
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
 
   const handleDelete = (id) => {
     setId(id);
-    console.log("borrado", id);
+    console.log('borrado', id);
   };
 
   const deleteProduct = async (id) => {
     try {
-      console.log("delete", id);
+      console.log('delete', id);
       const result = await axios.delete(`/admin/products/${id}`);
       if (result) {
         console.log(result);
       }
-      let myModalDelete = document.getElementById("deleteModal");
+      let myModalDelete = document.getElementById('deleteModal');
       let myModal = bootstrap.Modal.getInstance(myModalDelete);
       myModal.hide();
       setControlReload((controlReload = !controlReload));
     } catch (error) {
       console.error(error.response);
-      alert("producto no encontrado");
+      alert('producto no encontrado');
     }
   };
 

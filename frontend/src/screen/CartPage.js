@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { MessageBox } from '../components/MessageBox';
 import { Store } from '../Store';
 
 export default function CartPage() {
@@ -47,12 +48,12 @@ export default function CartPage() {
           <div className="row">
             <div className="col-lg-8 mb-4 mb-lg-0">
               {cartItems.length === 0 ? (
-                <div className="alert alert-info" role="alert">
-                  El carrito esta vacio.{' '}
+                <MessageBox variant="info">
+                  El carrito esta vacio.{'   '}
                   <Link className="text-dark" to="/tienda">
                     Ir a la tienda
                   </Link>
-                </div>
+                </MessageBox>
               ) : (
                 <div className="table-responsive mb-4">
                   <table className="table text-nowrap">

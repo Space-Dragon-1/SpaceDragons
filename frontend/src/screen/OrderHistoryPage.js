@@ -19,7 +19,7 @@ const reducer = (state, action) => {
   }
 };
 
-function SalesHistoryPage() {
+function OrderHistoryPage() {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
@@ -29,10 +29,13 @@ function SalesHistoryPage() {
   });
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate('/login?redirect=/my-orders');
+    }
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/sales`, {
+        const { data } = await axios.get(`/api/sales/mine`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
@@ -46,21 +49,13 @@ function SalesHistoryPage() {
     fetchData();
   }, [userInfo]);
 
-  function totalValor(arr) {
-    let result = 0;
-    arr.map((ventas) => {
-      let totalFac = ventas.totalPrice;
-      result = result + totalFac;
-    });
-    return result;
-  }
   return (
     <div className="container">
       <section className="py-5 bg-light">
         <div className="container">
           <div className="row px-4 px-lg-5 py-lg-4 align-items-center">
             <div className="col-lg-6">
-              <h1 className="h2 text-uppercase mb-0">Ventas</h1>
+              <h1 className="h2 text-uppercase mb-0">Mis Compras</h1>
             </div>
           </div>
         </div>
@@ -68,23 +63,9 @@ function SalesHistoryPage() {
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
-        <MessageBox></MessageBox>
+        <MessageBox variant="danger"></MessageBox>
       ) : (
         <section className="py-5">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="text-uppercase mb-4">Total Ventas</h5>
-                  <p className="card-text">
-                    <span className="lead">
-                      $ {totalValor(sales).toLocaleString('co')}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="row">
             <div className="col-lg-12 mb-4 mb-lg-0">
               <div className="table-responsive mb-4">
@@ -94,11 +75,6 @@ function SalesHistoryPage() {
                       <th className="border-0 p-3 text-center" scope="col">
                         <strong className="text-sm text-uppercase">
                           ID VENTA
-                        </strong>
-                      </th>
-                      <th className="border-0 p-3 text-center" scope="col">
-                        <strong className="text-sm text-uppercase">
-                          USUARIO
                         </strong>
                       </th>
                       <th className="border-0 p-3 text-center" scope="col">
@@ -113,12 +89,7 @@ function SalesHistoryPage() {
                       </th>
                       <th className="border-0 p-3 text-center" scope="col">
                         <strong className="text-sm text-uppercase">
-                          PAGADO
-                        </strong>
-                      </th>
-                      <th className="border-0 p-3 text-center" scope="col">
-                        <strong className="text-sm text-uppercase">
-                          ENVIADO
+                          ENVÍO
                         </strong>
                       </th>
                       <th className="border-0 p-3 text-center" scope="col">
@@ -137,18 +108,13 @@ function SalesHistoryPage() {
                               <strong>
                                 <Link
                                   className="reset-anchor animsition-link"
-                                  to={`/admin/sales/${sale._id}`}
+                                  to={`/order/${sale._id}`}
                                 >
                                   <p>{sale._id}</p>
                                 </Link>
                               </strong>
                             </div>
                           </div>
-                        </td>
-                        <td className="ps-0 py-3 border-light text-center align-middle">
-                          <p className="mb-0 small">
-                            {sale.user ? sale.user.name : 'ELIMINADO'}
-                          </p>
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
                           <p className="mb-0 small">
@@ -162,14 +128,11 @@ function SalesHistoryPage() {
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
                           <p className="mb-0 small">
-                            {sale.isPaid ? sale.paidAt.substring(0, 10) : 'No'}
-                          </p>
-                        </td>
-                        <td className="ps-0 py-3 border-light text-center align-middle">
-                          <p className="mb-0 small">
-                            {sale.isDelivered
-                              ? sale.deliveredAt.substring(0, 10)
-                              : 'No'}
+                            {sale.isDelivered ? (
+                              <span>Enviado el: {sale.devliveredAt}</span>
+                            ) : (
+                              <span>No despachado</span>
+                            )}
                           </p>
                         </td>
                         <td className="ps-0 py-3 border-light text-center align-middle">
@@ -177,10 +140,10 @@ function SalesHistoryPage() {
                             className="btn btn-secondary"
                             type="button"
                             onClick={() => {
-                              navigate(`/admin/sales/${sale._id}`);
+                              navigate(`/order/${sale._id}`);
                             }}
                           >
-                            Detalles
+                            Detalle
                           </button>
                         </td>
                       </tr>
@@ -196,4 +159,4 @@ function SalesHistoryPage() {
   );
 }
 
-export default SalesHistoryPage;
+export default OrderHistoryPage;

@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { LoadingBox } from '../components/LoadingBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
@@ -59,10 +60,10 @@ export default function PaymentPage() {
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' });
       localStorage.removeItem('cartItems');
-      navigate(`/sales/${data.sales._id}`);
+      navigate(`/order/${data.sales._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
-      alert(getError(err));
+      toast.error(getError(err));
     }
   };
 

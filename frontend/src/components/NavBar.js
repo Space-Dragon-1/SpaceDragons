@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Store } from '../Store';
 
 function Navbar() {
@@ -10,6 +10,7 @@ function Navbar() {
     ctxDispatch({ type: 'USER_LOGOUT' });
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
+    window.location.href = '/login';
   };
   return (
     <React.Fragment>
@@ -49,42 +50,43 @@ function Navbar() {
                     Tienda
                   </NavLink>
                 </li>
-
-                <li className="nav-item dropdown">
-                  <NavLink
-                    className="nav-link dropdown-toggle"
-                    id="pagesDropdown"
-                    to="/null"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Admin
-                  </NavLink>
-                  <div
-                    className="dropdown-menu mt-3 shadow-sm"
-                    aria-labelledby="pagesDropdown"
-                  >
+                {userInfo && userInfo.isAdmin && (
+                  <li className="nav-item dropdown">
                     <NavLink
-                      className="dropdown-item border-0 transition-link"
-                      to="/lista-productos-admin"
+                      className="nav-link dropdown-toggle"
+                      id="pagesDropdown"
+                      to="/null"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
                     >
-                      Todos los productos
+                      Admin
                     </NavLink>
-                    <NavLink
-                      className="dropdown-item border-0 transition-link"
-                      to="/nuevo-producto"
+                    <div
+                      className="dropdown-menu mt-3 shadow-sm"
+                      aria-labelledby="pagesDropdown"
                     >
-                      Agregar nuevo producto
-                    </NavLink>
-                    <NavLink
-                      className="dropdown-item border-0 transition-link"
-                      to="/ventas-realizadas"
-                    >
-                      Ventas
-                    </NavLink>
-                  </div>
-                </li>
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="/admin/product-list"
+                      >
+                        Todos los productos
+                      </NavLink>
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="/admin/new-product"
+                      >
+                        Agregar nuevo producto
+                      </NavLink>
+                      <NavLink
+                        className="dropdown-item border-0 transition-link"
+                        to="/admin/sales"
+                      >
+                        Ventas
+                      </NavLink>
+                    </div>
+                  </li>
+                )}
               </ul>
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
@@ -114,13 +116,34 @@ function Navbar() {
                     <ul className="dropdown-menu mt-3 shadow-sm">
                       <li>
                         <NavLink
+                          className="dropdown-item border-0 transition-link"
+                          to="/profile"
+                        >
+                          <i className="me-1 text-gray fw-normal"></i>
+                          Perfil
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          className="dropdown-item border-0 transition-link"
+                          to="/my-orders"
+                        >
+                          <i className="fas fa-dashboard me-1 text-gray fw-normal"></i>
+                          Mis ordenes
+                        </NavLink>
+                      </li>
+                      <li>
+                        <hr class="dropdown-divider opacity-75" />
+                      </li>
+                      <li>
+                        <Link
                           className="dropdown-item"
                           to="#logout"
                           onClick={logoutHandler}
                         >
-                          <i className="fas fa-close me-1 text-gray fw-normal"></i>
+                          <i className="fa fa-user-minus text-white fw-normal"></i>
                           Cerrar sesion
-                        </NavLink>
+                        </Link>
                       </li>
                     </ul>
                   </li>
@@ -133,6 +156,7 @@ function Navbar() {
                     </NavLink>
                   </li>
                 )}
+
                 <li></li>
               </ul>
             </div>
