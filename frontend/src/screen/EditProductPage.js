@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useReducer } from "react";
-import { toast, Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { LoadingBox } from "../components/LoadingBox";
 import { MessageBox } from "../components/MessageBox";
@@ -66,11 +66,6 @@ export function EditProductPage() {
           toast.error("algo salió mal, intente de nuevo");
           console.error(error.response);
         });
-
-      /* if (result.response) {
-        toast.success("producto actualizado");
-        console.log(result);
-      } */
     } catch (error) {
       if (error.response) {
         toast.error("ya existe este producto");
@@ -92,16 +87,6 @@ export function EditProductPage() {
   ) : (
     <section className="py-5">
       <div className="container">
-        <Toaster
-          toastOptions={{
-            success: {
-              className: "bg-success bg-gradient text-white",
-            },
-            error: {
-              className: "bg-danger bg-gradient text-white",
-            },
-          }}
-        />
         <div className="row mb-5">
           <div className="col-lg-6 col-sm-6">
             <Formik
@@ -219,76 +204,6 @@ export function EditProductPage() {
                 </Form>
               )}
             </Formik>
-            {/* <form>
-              <div className="mb-3">
-                <label className="form-label">slug</label>
-                <input
-                  className="form-control"
-                  placeholder={product.slug}
-                  type="text"
-                  id="slug"
-                  defaultValue={product.slug}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Nombre del producto</label>
-                <input
-                  className="form-control"
-                  placeholder={product.name}
-                  type="text"
-                  id="Name"
-                  defaultValue={product.name}
-                />
-              </div>
-              <label className="form-label">Precio del producto</label>
-              <div className="input-group mb-3">
-                <span className="input-group-text">$</span>
-                <input
-                  className="form-control"
-                  placeholder={product.price}
-                  type="Number"
-                  id="Precio"
-                  defaultValue={product.price}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Cantidad del producto</label>
-                <input
-                  className="form-control"
-                  placeholder={product.stock}
-                  type="Number"
-                  id="Stock"
-                  defaultValue={product.stock}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Descripción del producto</label>
-                <textarea
-                  className="form-control"
-                  placeholder={product.description}
-                  id="Description"
-                  defaultValue={product.description}
-                ></textarea>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Subir imagen del producto</label>
-                <input
-                  className="form-control"
-                  type="file"
-                  accept="image/png, image/jpeg"
-                />
-              </div>
-              <div className="mb-3">
-                <button
-                  className="btn btn-primary"
-                  
-                  type="submit"
-                  id="BtnSave"
-                >
-                  Ingresar
-                </button>
-              </div>
-            </form> */}
           </div>
 
           <div className="col-lg-6 col-sm-6 text-center">

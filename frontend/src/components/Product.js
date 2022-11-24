@@ -11,7 +11,7 @@ export function Product(props) {
     <div className="col-lg-3 col-sm-6">
       <div className="product text-center">
         <div className="mb-3 position-relative w-100">
-          <Link className="d-block" to={`/lista-productos-admin/${product.slug}`}>
+          <Link className="d-block" to={`/admin/product/${product.slug}`}>
             <img
               className="img-fluid img-wrapper mx-auto"
               src={product.image}
@@ -23,7 +23,7 @@ export function Product(props) {
               <li className="list-inline-item m-0 p-0">
                 <Link
                   className="btn btn-sm btn-outline-primary"
-                  to={`/lista-productos-admin/${product.slug}`}
+                  to={`/admin/product/${product.slug}`}
                 >
                   <i className="far fa-edit"></i> Modificar
                 </Link>
@@ -40,7 +40,7 @@ export function Product(props) {
           {" "}
           <Link
             className="reset-anchor"
-            to={`/lista-productos-admin/${product.slug}`}
+            to={`/admin/product/${product.slug}`}
           >
             {product.name}
           </Link>

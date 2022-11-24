@@ -1,12 +1,11 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { LoadingBox } from "../components/LoadingBox";
 
 export function NewProductPage() {
-  //const navigate = useNavigate();
 
   const [product, setProduct] = useState({
     slug: "",
@@ -17,78 +16,7 @@ export function NewProductPage() {
     image: null,
   });
 
-  /* let [name, setName] = useState("");
-  let [slug, setSlug] = useState("");
-  let [description, setDescription] = useState("");
-  let [price, setPrice] = useState("");
-  let [stock, setStock] = useState("");
-  let [image, setImage] = useState(null);
-
-  let onChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  let onChangeSlug = (e) => {
-    setSlug(e.target.value);
-  };
-
-  let onChangeDescription = (e) => {
-    setDescription(e.target.value);
-  };
-
-  let onChangePrice = (e) => {
-    setPrice(e.target.value);
-  };
-
-  let onChangeStock = (e) => {
-    setStock(e.target.value);
-  };
-
-  let onChangeImage = (e) => {
-    setImage(e.target.files[0]);
-    /* if (e.target.files && e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
-    }
-     */ /*
-    console.log(image);
-    //setImage((image = e.target.value));
-  };
-
-  let onSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const form = new FormData();
-      form.append("name", name);
-      form.append("slug", slug);
-      form.append("description", description);
-      form.append("price", price);
-      form.append("stock", stock);
-      form.append("image", image);
-
-      let result = await axios.post("/admin/products", form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      if (result.status === 200) {
-        console.log(result);
-        const toastTrigger = document.getElementById("liveToastBtn");
-        const toastLiveExample = document.getElementById("liveToast");
-        if (toastTrigger) {
-          toastTrigger.addEventListener("click", () => {
-            const toast = new bootstrap.Toast(toastLiveExample);
-            toast.show();
-          });
-        }
-      } else if (result.status === 409) {
-        console.log(result);
-        alert("ya existe este producto");
-      }
-    } catch (error) {
-      console.error(error.response);
-    }
-  }; */
+  
 
   const createProduct = async (product) => {
     try {
@@ -112,10 +40,6 @@ export function NewProductPage() {
           console.error(error.response);
         });
 
-      /* if (result.response) {
-        toast.success("producto agregado");
-        console.log(result);
-      } */
     } catch (error) {
       if (error.response) {
         toast.error("ya existe este producto");
@@ -132,17 +56,6 @@ export function NewProductPage() {
 
   return (
     <div className="container">
-      <Toaster
-        toastOptions={{
-          success: {
-            className: "bg-success bg-gradient text-white",
-          },
-          error: {
-            className: "bg-danger bg-gradient text-white",
-          },
-        }}
-      />
-
       <section className="py-5 bg-light">
         <div className="container">
           <div className="row px-auto px-lg-5 py-lg-3 align-items-center">

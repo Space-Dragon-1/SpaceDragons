@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Store } from '../Store';
 import { getError } from '../utils';
 
@@ -39,7 +39,7 @@ export default function LoginPage() {
     <div className="container w-100 m-auto pt-5 pb-5">
       <div className="row justify-content-center">
         <div className="col-6">
-          <h1 className="my-3">Iniciar Session</h1>
+          <h1 className="my-3">Iniciar Sesión</h1>
           <form onSubmit={submitHandler}>
             <div className="form-group">
               <label>Email</label>
@@ -48,7 +48,7 @@ export default function LoginPage() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="hola@tucorreo.com"
+                placeholder="ejemplo@correo.com"
                 required
                 onChange={(e) => setEmail(e.target.value)}
               ></input>

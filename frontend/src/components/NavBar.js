@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Store } from '../Store';
 
 function Navbar() {
@@ -133,7 +133,7 @@ function Navbar() {
                         </NavLink>
                       </li>
                       <li>
-                        <hr class="dropdown-divider opacity-75" />
+                        <hr className="dropdown-divider opacity-75" />
                       </li>
                       <li>
                         <Link
@@ -168,3 +168,4 @@ function Navbar() {
 }
 
 export { Navbar };
+
