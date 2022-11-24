@@ -1,0 +1,21 @@
+{
+  "name": "spacedragons",
+  "version": "1.0.0",
+  "description": "<h1>SpaceDragons</h1>\r <p>Proyecto de E-comerce para el programa Mision TIC ciclo 4</p>",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Space-Dragon-1/SpaceDragons.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Space-Dragon-1/SpaceDragons/issues"
+  },
+  "homepage": "https://github.com/Space-Dragon-1/SpaceDragons#readme"
+}
