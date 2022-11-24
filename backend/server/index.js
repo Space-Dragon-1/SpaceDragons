@@ -1,18 +1,25 @@
-import app from './app.js';
-import data from './data/products.js';
-import { PORT } from './config.js';
-import { DBconnection } from './db.js';
-import seedRouter from './routes/seedRoutes.js';
-import productRouter from './routes/productRoutes.js';
-import userRouter from './routes/userRoutes.js';
-import salesRouter from './routes/salesRoutes.js';
+import path from "path";
+import app from "./app.js";
+//import { PORT } from './config.js';
+import express from "express";
+import { DBconnection } from "./db.js";
+import productRouter from "./routes/productRoutes.js";
+import salesRouter from "./routes/salesRoutes.js";
+import seedRouter from "./routes/seedRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 DBconnection();
 
-app.use('/api/seed', seedRouter);
-app.use('/api/products', productRouter);
-app.use('/api/users', userRouter);
-app.use('/api/sales', salesRouter);
+app.use("/api/seed", seedRouter);
+app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
+app.use("/api/sales", salesRouter);
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/frontend/build")));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
