@@ -1,8 +1,8 @@
+import bcrypt from 'bcryptjs';
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import bcrypt from 'bcryptjs';
-import User from '../models/userModel.js';
 import { generateToken, isAuth } from '../../utils.js';
+import User from '../models/userModel.js';
 
 const userRouter = express.Router();
 
@@ -40,6 +40,7 @@ userRouter.post(
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      token: generateToken(user),
     });
   })
 );
