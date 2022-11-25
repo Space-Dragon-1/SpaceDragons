@@ -89,7 +89,7 @@ export default function RegisterPage() {
                 className="form-control"
                 id="confirm-password"
                 name="confirm-password"
-                type="confirm-password"
+                type="password"
                 placeholder="Confirmar contraseña"
                 required
                 onChange={(e) => setConfirmPassword(e.target.value)}

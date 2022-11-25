@@ -5,7 +5,7 @@ function HomePage() {
     <>
       <section
         className="hero pb-3 bg-cover bg-center d-flex align-items-center"
-        style={{ background: "url(images/hero-banner-alt.jpg)" }}
+        style={{ background: "url(hero-banner-alt.jpg)" }}
       >
         <div className="container py-5">
           <div className="row px-4 px-lg-5">
